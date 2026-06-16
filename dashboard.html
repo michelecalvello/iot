@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoT Monitoring Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root {
+  --bg:#0b0f1a; --surface:#131828; --card:#1a2136; --border:#252e45;
+  --accent:#3b82f6; --accent2:#06b6d4; --green:#10b981; --amber:#f59e0b;
+  --red:#ef4444; --text:#e2e8f0; --muted:#64748b;
+  --mono:'JetBrains Mono','Fira Code',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh;}
+
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;
+  height:54px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;}
+.logo-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.badge{font-size:10px;font-family:var(--mono);background:rgba(59,130,246,.15);color:var(--accent);
+  border:1px solid rgba(59,130,246,.3);padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.5px;}
+.spacer{flex:1;}
+.gh-link{font-size:12px;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:5px;}
+.gh-link:hover{color:var(--text);}
+
+.shell{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 54px);}
+
+aside{background:var(--surface);border-right:1px solid var(--border);padding:16px 0;overflow-y:auto;display:flex;flex-direction:column;}
+.sec{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:0 16px 8px;}
+
+/* config box */
+.cfg{margin:0 12px 14px;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:11px 12px;}
+.cfg label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.cfg input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:5px;
+  color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 8px;outline:none;transition:border-color .2s;margin-bottom:8px;}
+.cfg input:last-of-type{margin-bottom:0;}
+.cfg input:focus{border-color:var(--accent);}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;
+  width:calc(100% - 24px);margin:0 12px 10px;padding:8px;border:none;border-radius:7px;
+  font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;font-family:var(--sans);}
+.btn:hover{opacity:.85;} .btn:active{transform:scale(.97);} .btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text);}
+
+.file-list{flex:1;padding-bottom:10px;}
+.file-item{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;
+  border-left:3px solid transparent;transition:background .12s,border-color .12s;user-select:none;}
+.file-item:hover{background:rgba(255,255,255,.04);}
+.file-item.active{background:rgba(59,130,246,.1);border-left-color:var(--accent);}
+.file-name{flex:1;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.file-dot.pend{background:var(--amber);}
+
+.log{margin:0 12px 0;background:var(--card);border:1px solid var(--border);border-radius:7px;
+  padding:8px 10px;font-size:10px;font-family:var(--mono);color:var(--muted);
+  line-height:1.9;max-height:120px;overflow-y:auto;display:none;}
+.log .ok{color:var(--green);} .log .err{color:var(--red);} .log .info{color:var(--accent2);}
+
+main{padding:22px;overflow-y:auto;}
+
+/* empty state */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:65vh;gap:14px;text-align:center;color:var(--muted);}
+.empty-icon{font-size:52px;}
+.empty-title{font-size:20px;font-weight:700;color:var(--text);}
+.empty-sub{max-width:400px;line-height:1.75;font-size:13px;}
+.empty-sub strong{color:var(--text);}
+.step{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;
+  background:var(--accent);color:#fff;border-radius:50%;font-size:11px;font-weight:700;margin-right:4px;}
+
+/* chart area */
+.file-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.file-title{font-size:20px;font-weight:700;}
+.pill{font-size:11px;padding:2px 9px;border-radius:99px;font-family:var(--mono);
+  background:rgba(29,111,66,.18);color:#4ade80;border:1px solid rgba(16,185,129,.3);}
+
+.sheet-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.stab{padding:4px 11px;border:1px solid var(--border);background:var(--card);color:var(--muted);
+  border-radius:5px;cursor:pointer;font-size:12px;transition:background .12s,color .12s,border-color .12s;}
+.stab:hover{color:var(--text);background:var(--surface);}
+.stab.active{background:rgba(59,130,246,.15);color:var(--accent);border-color:rgba(59,130,246,.4);font-weight:600;}
+
+.meta-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px;}
+.chip{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 11px;font-size:12px;color:var(--muted);}
+.chip span{color:var(--text);font-weight:600;}
+
+.controls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+.cl{font-size:12px;color:var(--muted);}
+.cg{display:flex;gap:3px;}
+.cb{padding:4px 10px;border:1px solid var(--border);background:var(--card);color:var(--muted);
+  border-radius:5px;cursor:pointer;font-size:12px;font-family:var(--sans);
+  transition:background .12s,color .12s,border-color .12s;}
+.cb:hover{background:var(--surface);color:var(--text);}
+.cb.on{background:rgba(59,130,246,.15);color:var(--accent);border-color:rgba(59,130,246,.4);}
+.cb.sec{background:var(--card);border-color:var(--border);color:var(--text);}
+
+.charts-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px 17px 11px;}
+.cc.full{grid-column:1/-1;}
+.ct{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
+.ct-title{font-size:13px;font-weight:600;flex:1;}
+.ct-stat{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right;white-space:nowrap;}
+canvas{max-height:240px;}
+
+.tbl-wrap{overflow-x:auto;margin-top:16px;border:1px solid var(--border);border-radius:9px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead{background:var(--surface);position:sticky;top:0;z-index:1;}
+th{padding:8px 12px;text-align:left;font-weight:600;color:var(--muted);
+  border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;}
+th:hover{color:var(--text);}
+td{padding:7px 12px;border-bottom:1px solid rgba(37,46,69,.4);font-family:var(--mono);white-space:nowrap;}
+tr:last-child td{border-bottom:none;} tr:hover td{background:rgba(255,255,255,.02);}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+.loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:50px;color:var(--muted);}
+
+.err-box{margin-top:12px;padding:16px;background:var(--card);border:1px solid rgba(239,68,68,.3);
+  border-radius:9px;color:var(--red);font-family:var(--mono);font-size:12px;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><div class="logo-icon">📊</div><span>IoT Monitoring</span></div>
+  <span class="badge">Time Series</span>
+  <div class="spacer"></div>
+  <a class="gh-link" href="https://github.com/michelecalvello/iot" target="_blank">
+    ⎔ michelecalvello/iot
+  </a>
+</header>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<aside>
+  <div class="sec">Configurazione repo</div>
+  <div class="cfg">
+    <label>GitHub user</label>
+    <input id="gh-user" value="michelecalvello"/>
+    <label>Repository</label>
+    <input id="gh-repo" value="iot"/>
+    <label>Branch</label>
+    <input id="gh-branch" value="main"/>
+    <label>Cartella (lascia vuoto = root)</label>
+    <input id="gh-folder" value="" placeholder="es: data"/>
+  </div>
+
+  <button class="btn btn-primary" id="btn-load" onclick="loadFiles()">
+    <span id="load-ico">🔍</span><span id="load-txt">Cerca file Excel</span>
+  </button>
+
+  <div class="sec">File disponibili</div>
+  <div class="file-list" id="file-list">
+    <div style="padding:8px 16px;font-size:12px;color:var(--muted)">
+      Premi "Cerca file Excel" per iniziare
+    </div>
+  </div>
+
+  <div class="log" id="log"></div>
+</aside>
+
+<!-- MAIN -->
+<main>
+  <div class="empty" id="empty">
+    <div class="empty-icon">📈</div>
+    <div class="empty-title">IoT Monitoring Dashboard</div>
+    <div class="empty-sub">
+      <span class="step">1</span> Carica i file <strong>.xlsx</strong> nella repo GitHub<br><br>
+      <span class="step">2</span> Premi <strong>Cerca file Excel</strong> nella sidebar<br><br>
+      <span class="step">3</span> Clicca su un file per visualizzare le time series
+    </div>
+  </div>
+  <div id="chart-area" style="display:none"></div>
+</main>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────
+const PALETTE = ['#3b82f6','#06b6d4','#10b981','#f59e0b','#a78bfa','#f43f5e','#fb923c','#84cc16'];
+
+let S = {
+  files:[], activeFile:null, activeSheet:null,
+  data:{}, charts:[], chartType:'line', selSeries:[],
+  sortCol:null, sortDir:1, tblVis:false
+};
+
+// ── LOG ────────────────────────────────────────────────────────────────────
+function lg(m,cls=''){
+  const el=document.getElementById('log');
+  el.style.display='';
+  el.innerHTML+=`<div class="${cls}">${m}</div>`;
+  el.scrollTop=el.scrollHeight;
+}
+const lgOk=m=>lg('✓ '+m,'ok');
+const lgErr=m=>lg('✗ '+m,'err');
+const lgInfo=m=>lg('→ '+m,'info');
+
+// ── GITHUB HELPERS ────────────────────────────────────────────────────────
+function cfg(){
+  return {
+    user:   document.getElementById('gh-user').value.trim(),
+    repo:   document.getElementById('gh-repo').value.trim(),
+    branch: document.getElementById('gh-branch').value.trim() || 'main',
+    folder: document.getElementById('gh-folder').value.trim()
+  };
+}
+
+// GitHub API: lista contenuto cartella
+function apiUrl(c, path=''){
+  const p = path || c.folder || '';
+  return `https://api.github.com/repos/${c.user}/${c.repo}/contents/${p}?ref=${c.branch}`;
+}
+
+// URL raw per scaricare un file
+function rawUrl(c, path){
+  return `https://raw.githubusercontent.com/${c.user}/${c.repo}/${c.branch}/${path}`;
+}
+
+// ── STEP 1: LISTA FILE XLSX ───────────────────────────────────────────────
+async function loadFiles(){
+  const c = cfg();
+  if(!c.user||!c.repo){alert('Compila user e repository');return;}
+
+  const btn=document.getElementById('btn-load');
+  btn.disabled=true;
+  document.getElementById('load-ico').textContent='⏳';
+  document.getElementById('load-txt').textContent='Ricerca…';
+  document.getElementById('log').innerHTML='';
+  document.getElementById('log').style.display='none';
+
+  lgInfo(`Connessione a github.com/${c.user}/${c.repo} (branch: ${c.branch})…`);
+  document.getElementById('file-list').innerHTML=
+    '<div class="loading"><div class="spin"></div> Lettura repo…</div>';
+
+  try {
+    const url = apiUrl(c);
+    const r = await fetch(url, {headers:{'Accept':'application/vnd.github.v3+json'}});
+
+    if(r.status===404) throw new Error(`Repo o cartella non trovata. Controlla user/repo/branch.`);
+    if(r.status===403) throw new Error(`Rate limit GitHub raggiunto. Riprova tra un minuto.`);
+    if(!r.ok) throw new Error(`GitHub API: HTTP ${r.status}`);
+
+    const items = await r.json();
+    if(!Array.isArray(items)) throw new Error('Risposta GitHub inattesa (la repo è vuota?)');
+
+    S.files = items
+      .filter(f => f.type==='file' && /\.(xlsx|xls)$/i.test(f.name))
+      .map(f => ({name:f.name, path:f.path, sha:f.sha}));
+
+    renderSidebar();
+
+    if(S.files.length){
+      lgOk(`${S.files.length} file Excel trovati`);
+    } else {
+      lgErr('Nessun file .xlsx trovato. Carica i file Excel nella repo e riprova.');
+      document.getElementById('file-list').innerHTML=
+        '<div style="padding:8px 16px;font-size:12px;color:var(--muted)">Nessun file .xlsx trovato</div>';
+    }
+
+  } catch(e){
+    lgErr(e.message);
+    document.getElementById('file-list').innerHTML=
+      `<div style="padding:10px 16px;font-size:12px;color:var(--red)">${e.message}</div>`;
+  }
+
+  btn.disabled=false;
+  document.getElementById('load-ico').textContent='🔍';
+  document.getElementById('load-txt').textContent='Cerca file Excel';
+}
+
+function renderSidebar(){
+  if(!S.files.length) return;
+  document.getElementById('file-list').innerHTML = S.files.map(f=>`
+    <div class="file-item ${S.activeFile===f.path?'active':''}"
+         onclick="selectFile('${esc(f.path)}','${esc(f.name)}')">
+      <span>🟢</span>
+      <span class="file-name" title="${f.name}">${f.name}</span>
+      <span class="file-dot ${S.data[f.path]?'':'pend'}"></span>
+    </div>`).join('');
+}
+
+// ── STEP 2: SCARICA E PARSA XLSX ─────────────────────────────────────────
+async function selectFile(fpath, fname){
+  S.activeFile=fpath; S.activeSheet=null; S.selSeries=[];
+  renderSidebar(); showMain();
+
+  document.getElementById('chart-area').innerHTML=`
+    <div class="file-hdr"><div class="file-title">${fname}</div><span class="pill">XLSX</span></div>
+    <div class="loading"><div class="spin"></div> Download da GitHub…</div>`;
+
+  if(S.data[fpath]){renderDash(fpath,fname);return;}
+
+  lgInfo(`Download "${fname}"…`);
+  try {
+    const c = cfg();
+    const url = rawUrl(c, fpath);
+    lgInfo(`URL: ${url}`);
+
+    const r = await fetch(url);
+    if(!r.ok) throw new Error(`HTTP ${r.status} — file non raggiungibile`);
+
+    const buf = await r.arrayBuffer();
+    lgOk(`Download OK (${(buf.byteLength/1024).toFixed(1)} KB) — parsing…`);
+
+    const wb = XLSX.read(buf, {type:'array', cellDates:true});
+    const sheets = {};
+    for(const sn of wb.SheetNames){
+      const ws = wb.Sheets[sn];
+      const aoa = XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false});
+      if(!aoa.length) continue;
+      const headers = aoa[0].map(String);
+      const rows = aoa.slice(1).filter(r=>r.some(v=>v!==''));
+      sheets[sn] = {headers, rows};
+      lgOk(`Foglio "${sn}": ${rows.length} righe × ${headers.length} colonne`);
+    }
+
+    if(!Object.keys(sheets).length) throw new Error('Nessun foglio con dati trovato');
+
+    S.data[fpath] = sheets;
+    S.activeSheet = Object.keys(sheets)[0];
+    renderSidebar();
+    renderDash(fpath, fname);
+
+  } catch(e){
+    lgErr(e.message);
+    document.getElementById('chart-area').innerHTML=`
+      <div class="file-hdr"><div class="file-title">${fname}</div></div>
+      <div class="err-box">❌ ${e.message}<br><br>
+        <span style="color:var(--muted)">Assicurati che il file sia nel branch corretto della repo.</span>
+      </div>`;
+  }
+}
+
+// ── RENDER DASHBOARD ──────────────────────────────────────────────────────
+function renderDash(fpath, fname){
+  const fd=S.data[fpath]; if(!fd) return;
+  const sheets=Object.keys(fd);
+  if(!S.activeSheet||!fd[S.activeSheet]) S.activeSheet=sheets[0];
+
+  const {headers,rows}=fd[S.activeSheet];
+  destroyCharts();
+
+  const tIdx=detectTime(headers,rows);
+  const nums=headers.map((h,i)=>({h,i})).filter(({i})=>i!==tIdx&&isNum(rows,i));
+  if(!S.selSeries.length) S.selSeries=nums.slice(0,4).map(c=>c.i);
+
+  const ca=document.getElementById('chart-area');
+  ca.innerHTML=`
+    <div class="file-hdr">
+      <div class="file-title">${fname}</div><span class="pill">XLSX</span>
+      ${sheets.length>1?`<span style="font-size:12px;color:var(--muted)">${sheets.length} fogli</span>`:''}
+    </div>
+
+    ${sheets.length>1?`<div class="sheet-tabs">${sheets.map(s=>`
+      <button class="stab ${s===S.activeSheet?'active':''}"
+        onclick="switchSheet('${esc(fpath)}','${esc(fname)}','${esc(s)}')">${s}</button>`).join('')}
+    </div>`:''}
+
+    <div class="meta-row" id="mrow"></div>
+
+    <div class="controls">
+      <span class="cl">Grafico:</span>
+      <div class="cg">
+        <button class="cb ${S.chartType==='line'?'on':''}" onclick="setType('line','${esc(fpath)}','${esc(fname)}')">📈 Linea</button>
+        <button class="cb ${S.chartType==='bar'?'on':''}"  onclick="setType('bar','${esc(fpath)}','${esc(fname)}')">📊 Barre</button>
+        <button class="cb ${S.chartType==='scatter'?'on':''}" onclick="setType('scatter','${esc(fpath)}','${esc(fname)}')">⚬ Scatter</button>
+      </div>
+      <span class="cl" style="margin-left:6px">Serie:</span>
+      ${nums.map(({h,i})=>`<button class="cb ${S.selSeries.includes(i)?'on':''}"
+        onclick="togSerie(${i},'${esc(fpath)}','${esc(fname)}')">${h}</button>`).join('')}
+      <button class="cb sec" style="margin-left:auto" onclick="togTbl()">📋 Tabella</button>
+    </div>
+
+    <div class="charts-grid" id="cgrid"></div>
+    <div id="tsec" style="display:none"></div>`;
+
+  buildMeta(headers,rows,nums,tIdx);
+  buildCharts(headers,rows,nums,tIdx);
+  buildTable(headers,rows);
+}
+
+function switchSheet(fp,fn,s){S.activeSheet=s;S.selSeries=[];renderDash(fp,fn);}
+function setType(t,fp,fn){S.chartType=t;renderDash(fp,fn);}
+function togSerie(i,fp,fn){
+  const x=S.selSeries.indexOf(i);
+  if(x>=0)S.selSeries.splice(x,1);else S.selSeries.push(i);
+  renderDash(fp,fn);
+}
+function togTbl(){
+  S.tblVis=!S.tblVis;
+  const s=document.getElementById('tsec');
+  if(s)s.style.display=S.tblVis?'':'none';
+}
+
+// ── META ──────────────────────────────────────────────────────────────────
+function buildMeta(h,r,nums,tIdx){
+  const chips=[
+    {l:'Righe',v:r.length.toLocaleString('it-IT')},
+    {l:'Colonne',v:h.length},
+    {l:'Numeriche',v:nums.length},
+  ];
+  if(tIdx>=0){
+    chips.push({l:'Asse tempo',v:h[tIdx]});
+    if(r.length>1){
+      chips.push({l:'Da',v:String(r[0][tIdx]).slice(0,19)});
+      chips.push({l:'A', v:String(r[r.length-1][tIdx]).slice(0,19)});
+    }
+  }
+  document.getElementById('mrow').innerHTML=
+    chips.map(c=>`<div class="chip">${c.l}: <span>${c.v}</span></div>`).join('');
+}
+
+// ── CHARTS ────────────────────────────────────────────────────────────────
+function buildCharts(h,rows,nums,tIdx){
+  destroyCharts();
+  const g=document.getElementById('cgrid');g.innerHTML='';
+  const active=nums.filter(c=>S.selSeries.includes(c.i));
+  if(!active.length){g.innerHTML='<div style="color:var(--muted);padding:20px">Seleziona almeno una serie</div>';return;}
+
+  const labels=tIdx>=0?rows.map(r=>String(r[tIdx]).slice(0,19)):rows.map((_,i)=>i+1);
+  const ct=S.chartType==='scatter'?'line':S.chartType;
+
+  // Combined
+  const cb=document.createElement('div');cb.className='cc full';
+  cb.innerHTML=`<div class="ct">
+    <div class="ct-title">Time Series — ${active.map(c=>h[c.i]).join(', ')}</div>
+    <div class="ct-stat">${rows.length.toLocaleString()} punti</div></div>
+    <canvas id="cc0"></canvas>`;
+  g.appendChild(cb);
+  S.charts.push(new Chart(document.getElementById('cc0'),{
+    type:ct,
+    data:{labels,datasets:active.map((col,ci)=>mkDs(h[col.i],rows.map(r=>toN(r[col.i])),ci,false))},
+    options:opts()
+  }));
+
+  // Sparklines
+  active.forEach((col,ci)=>{
+    const vals=rows.map(r=>toN(r[col.i])).filter(v=>v!==null);
+    if(!vals.length)return;
+    const mn=Math.min(...vals),mx=Math.max(...vals);
+    const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+    const last=vals[vals.length-1];
+    const card=document.createElement('div');card.className='cc';
+    card.innerHTML=`<div class="ct">
+      <div class="ct-title">${h[col.i]}</div>
+      <div class="ct-stat">last ${fmt(last)}<br>avg ${fmt(avg)}<br>min ${fmt(mn)} · max ${fmt(mx)}</div>
+    </div><canvas id="cs${ci}"></canvas>`;
+    g.appendChild(card);
+    S.charts.push(new Chart(document.getElementById(`cs${ci}`),{
+      type:ct,
+      data:{labels,datasets:[mkDs(h[col.i],rows.map(r=>toN(r[col.i])),ci,true)]},
+      options:opts()
+    }));
+  });
+}
+
+function mkDs(label,data,ci,fill){
+  return{label,data,
+    borderColor:PALETTE[ci%PALETTE.length],
+    backgroundColor:S.chartType==='bar'?PALETTE[ci%PALETTE.length]+'55':PALETTE[ci%PALETTE.length]+(fill?'22':'18'),
+    borderWidth:2,fill,pointRadius:data.length>300?0:2,pointHoverRadius:4,tension:.35,spanGaps:true};
+}
+
+function opts(){return{
+  responsive:true,animation:{duration:300},interaction:{mode:'index',intersect:false},
+  plugins:{
+    legend:{labels:{color:'#94a3b8',font:{size:11},boxWidth:12,padding:12}},
+    tooltip:{backgroundColor:'#1a2136',borderColor:'#252e45',borderWidth:1,
+      titleColor:'#e2e8f0',bodyColor:'#94a3b8',padding:9,
+      callbacks:{label:ctx=>` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)}`}}
+  },
+  scales:{
+    x:{ticks:{color:'#475569',maxRotation:35,font:{size:10}},grid:{color:'#1e2a42'}},
+    y:{ticks:{color:'#475569',font:{size:11},callback:v=>fmt(v)},grid:{color:'#1e2a42'}}
+  }
+};}
+
+// ── TABLE ──────────────────────────────────────────────────────────────────
+function buildTable(headers,rows){
+  const shown=rows.slice(0,500);
+  document.getElementById('tsec').innerHTML=`
+    <div style="font-size:12px;color:var(--muted);margin:8px 0">
+      Prime ${shown.length} righe su ${rows.length}
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>${headers.map((hh,i)=>`<th onclick="sortTbl(${i})">${hh} ↕</th>`).join('')}</tr></thead>
+      <tbody>${shown.map(r=>`<tr>${r.map(v=>`<td>${v??''}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>`;
+}
+
+// ── UTILS ──────────────────────────────────────────────────────────────────
+function detectTime(h,r){
+  const kw=/time|date|timestamp|datetime|ora|data|tempo|periodo|instant/i;
+  const i=h.findIndex(x=>kw.test(x));if(i>=0)return i;
+  if(r.length&&/\d{4}[-/]\d{2}[-/]\d{2}|\d{2}:\d{2}/.test(String(r[0][0])))return 0;
+  return -1;
+}
+function isNum(r,i){
+  const s=r.slice(0,30).map(x=>x[i]).filter(v=>v!==''&&v!=null);
+  return s.filter(v=>!isNaN(parseFloat(v))).length/Math.max(s.length,1)>.6;
+}
+function toN(v){const n=parseFloat(v);return isNaN(n)?null:n;}
+function fmt(v){
+  if(v==null||isNaN(v))return'–';const n=parseFloat(v);
+  if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+'M';
+  if(Math.abs(n)>=1e3)return(n/1e3).toFixed(1)+'k';
+  return n%1===0?n.toLocaleString('it-IT'):n.toFixed(3);
+}
+function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+function destroyCharts(){S.charts.forEach(c=>c.destroy());S.charts=[];}
+function showMain(){
+  document.getElementById('empty').style.display='none';
+  document.getElementById('chart-area').style.display='';
+}
+function sortTbl(ci){
+  if(!S.activeFile||!S.activeSheet)return;
+  const d=S.data[S.activeFile]?.[S.activeSheet];if(!d)return;
+  if(S.sortCol===ci)S.sortDir*=-1;else{S.sortCol=ci;S.sortDir=1;}
+  d.rows.sort((a,b)=>{const av=toN(a[ci])??a[ci],bv=toN(b[ci])??b[ci];return(av<bv?-1:av>bv?1:0)*S.sortDir;});
+  buildTable(d.headers,d.rows);
+  if(S.tblVis)document.getElementById('tsec').style.display='';
+}
+</script>
+</body>
+</html>

@@ -498,12 +498,10 @@ function buildTable(headers,rows){
 
 // ── UTILS ──────────────────────────────────────────────────────────────────
 function detectTime(h,r){
-  const kw=/time|date|timestamp|datetime|ora|data|tempo|periodo|instant/i;
-  const i=h.findIndex(x=>kw.test(x));if(i>=0)return i;
-  if(r.length&&/\d{4}[-/]\d{2}[-/]\d{2}|\d{2}:\d{2}/.test(String(r[0][0])))return 0;
-  return -1;
+  return 1; // colonna B (indice 1) è sempre l'asse temporale
 }
 function isNum(r,i){
+  if(i===0||i===1) return false; // colonna A ignorata, colonna B è il tempo
   const s=r.slice(0,30).map(x=>x[i]).filter(v=>v!==''&&v!=null);
   return s.filter(v=>!isNaN(parseFloat(v))).length/Math.max(s.length,1)>.6;
 }

@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IoT Monitoring — Multi-serie</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.30.0/date_fns.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-adapter-date-fns/3.0.0/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root {
@@ -97,7 +96,10 @@ main{padding:20px 24px;overflow-y:auto;}
 .pbtn:hover{color:var(--text);border-color:var(--accent2);}
 .pbtn.on{background:rgba(88,166,255,.15);color:var(--accent2);border-color:var(--accent2);}
 
-.series-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.series-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:0;}
+.series-panel{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px 14px;margin-bottom:16px;}
+.series-panel .sec{padding-top:0;padding-bottom:8px;}
 .chip{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);
   border-radius:99px;padding:5px 6px 5px 12px;font-size:12px;}
 .chip-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
@@ -178,6 +180,11 @@ canvas{max-height:460px;}
   </div>
 
   <div id="chart-area" style="display:none">
+    <div class="series-panel">
+      <div class="sec" style="padding-left:0">Serie attive</div>
+      <div class="series-row" id="series-row"></div>
+    </div>
+
     <div class="toolbar">
       <div class="tb-field">
         <label>Inizio</label>
@@ -196,9 +203,6 @@ canvas{max-height:460px;}
       <div class="spacer"></div>
       <div class="tb-stat chart-stat" id="range-info"></div>
     </div>
-
-    <div class="sec" style="padding-left:0">Serie attive</div>
-    <div class="series-row" id="series-row"></div>
 
     <div class="chart-card">
       <div class="chart-hdr">

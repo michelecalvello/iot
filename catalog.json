@@ -1,0 +1,66 @@
+{
+  "catalog_version": "0.5",
+  "generated": "2026-10-20T22:30:00+01:00",
+  "conventions": {
+    "time_reference": "UTC+1 (ora solare italiana / CET, senza ora legale) per tutte le misure. Timestamp in ISO 8601 con offset '+01:00'.",
+    "series_id": "<STAZIONE>_<GRANDEZZA>",
+    "coordinates": "WGS84 (EPSG:4326), gradi decimali.",
+    "data_format": "File CSV con intestazione. Dati originali: time,value,flag (un file per anno). Aggregati: time,value,max,n,coverage. time = 'YYYY-MM-DD HH:MM' in UTC+1. flag: 0 valido.",
+    "aggregation_labels": "Pioggia: ogni dato è riferito all'intervallo che termina al timestamp. L'etichetta oraria/giornaliera indica l'inizio del periodo di cumulo."
+  },
+  "variables": {
+    "rain": { "label_it": "Pioggia", "unit": "mm" }
+  },
+  "stations": [
+    {
+      "station_id": "PZZ_CF",
+      "name": "Pozzuoli – Centro Funzionale Campania",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "elevation_m": 127,
+      "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania",
+      "external_code": "CF Campania",
+      "notes": "Stazione pluviometrica della rete del Centro Funzionale Campania. Dati a 10 minuti."
+    }
+  ],
+  "series": [
+    {
+      "series_id": "PZZ_CF_RAIN",
+      "station_id": "PZZ_CF",
+      "variable": "rain",
+      "label": "Pioggia – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "sum",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 23.4,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Dati originali Centro Funzionale Campania, risoluzione 10 minuti.",
+        "Totale registrato: 22.435 mm su 26 anni (07/12/2000 – 20/10/2026).",
+        "Massimo intensità: 23.4 mm/10 min in data 15/09/2001.",
+        "Secondo massimo: 23.2 mm/10 min in data 09/09/2026."
+      ],
+      "sources": [
+        { "file": "2000.12.07_-_2015.12.31.csv", "sheet": "–", "column": "Valore" },
+        { "file": "2016.01.01_-_2026.10.19.csv", "sheet": "–", "column": "Valore" }
+      ],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 0, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN_1d.csv"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+series_id,station_id,variable,label,unit,aggregation,step_min,start,end,n_values,min,max,status,lat,lon,qc_notes,source_files
+PZZ_CF_RAIN,PZZ_CF,rain,Pioggia – Pozzuoli (CF),mm,,sum,10.0,2000-12-07T00:10+01:00,2026-10-20T00:00+01:00,1358053,0.0,23.4,active,40.82980556,14.13547222,"Dati CF Campania 10 min. Totale 22435 mm (2000-2026). Max 23.4 mm/10min il 15/09/2001.","2000.12.07_-_2015.12.31.csv; 2016.01.01_-_2026.10.19.csv"

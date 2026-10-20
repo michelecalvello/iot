@@ -1,15 +1,21 @@
 {
   "catalog_version": "0.5",
-  "generated": "2026-10-20T22:30:00+01:00",
+  "generated": "2026-10-20T22:40:00+01:00",
   "conventions": {
     "time_reference": "UTC+1 (ora solare italiana / CET, senza ora legale) per tutte le misure. Timestamp in ISO 8601 con offset '+01:00'.",
     "series_id": "<STAZIONE>_<GRANDEZZA>",
     "coordinates": "WGS84 (EPSG:4326), gradi decimali.",
-    "data_format": "File CSV con intestazione. Dati originali: time,value,flag (un file per anno). Aggregati: time,value,max,n,coverage. time = 'YYYY-MM-DD HH:MM' in UTC+1. flag: 0 valido.",
-    "aggregation_labels": "Pioggia: ogni dato è riferito all'intervallo che termina al timestamp. L'etichetta oraria/giornaliera indica l'inizio del periodo di cumulo."
+    "data_format": "File CSV con intestazione. Dati originali: time,value,flag (un file per anno). Aggregati: time,value,max,n,coverage. time = 'YYYY-MM-DD HH:MM' in UTC+1. flag: 0 valido, 1 copertura <90% della finestra (valore sottostimato).",
+    "aggregation_labels": "Pioggia: ogni dato è riferito all'intervallo che termina al timestamp. Le serie di pioggia cumulata usano finestra mobile: il valore al tempo t è la somma dei mm caduti nelle N ore precedenti (intervallo (t-N h, t])."
   },
   "variables": {
-    "rain": { "label_it": "Pioggia", "unit": "mm" }
+    "rain":    { "label_it": "Pioggia",              "unit": "mm" },
+    "rain_1h": { "label_it": "Pioggia cumulata 1 h", "unit": "mm" },
+    "rain_3h": { "label_it": "Pioggia cumulata 3 h", "unit": "mm" },
+    "rain_6h": { "label_it": "Pioggia cumulata 6 h", "unit": "mm" },
+    "rain_24h":{ "label_it": "Pioggia cumulata 24 h","unit": "mm" },
+    "rain_48h":{ "label_it": "Pioggia cumulata 48 h","unit": "mm" },
+    "rain_72h":{ "label_it": "Pioggia cumulata 72 h","unit": "mm" }
   },
   "stations": [
     {
@@ -60,6 +66,216 @@
         "raw": "data/raw/PZZ_CF_RAIN/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN1H",
+      "station_id": "PZZ_CF",
+      "variable": "rain_1h",
+      "label": "Pioggia cumulata 1 h – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 80.0,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da PZZ_CF_RAIN: pioggia caduta nell'ora che termina al timestamp (finestra mobile, intervallo (t-1 h, t]), alla risoluzione originale (10 min).",
+        "Massimo 1 h: 80.0 mm.",
+        "flag 1 = copertura <90% della finestra (meno di 6 passi su 6): valore sottostimato. 351 dati segnalati su 1.358.053."
+      ],
+      "sources": [],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 351, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "derived_from": "PZZ_CF_RAIN",
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN1H/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN1H_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN1H_1d.csv"
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN3H",
+      "station_id": "PZZ_CF",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 139.4,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da PZZ_CF_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]).",
+        "Massimo 3 h: 139.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.088 dati segnalati."
+      ],
+      "sources": [],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 1088, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "derived_from": "PZZ_CF_RAIN",
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN6H",
+      "station_id": "PZZ_CF",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 140.4,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da PZZ_CF_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]).",
+        "Massimo 6 h: 140.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.861 dati segnalati."
+      ],
+      "sources": [],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 1861, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "derived_from": "PZZ_CF_RAIN",
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN24H",
+      "station_id": "PZZ_CF",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 140.4,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da PZZ_CF_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]).",
+        "Massimo 24 h: 140.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 2.580 dati segnalati."
+      ],
+      "sources": [],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 2580, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "derived_from": "PZZ_CF_RAIN",
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN48H",
+      "station_id": "PZZ_CF",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 142.0,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da PZZ_CF_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]).",
+        "Massimo 48 h: 142.0 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 4.395 dati segnalati."
+      ],
+      "sources": [],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 4395, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "derived_from": "PZZ_CF_RAIN",
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN72H",
+      "station_id": "PZZ_CF",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2000-12-07T00:10+01:00",
+      "end": "2026-10-20T00:00+01:00",
+      "n_values": 1358053,
+      "min": 0.0,
+      "max": 178.1,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da PZZ_CF_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]).",
+        "Massimo 72 h: 178.1 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 3.880 dati segnalati."
+      ],
+      "sources": [],
+      "qc_summary": { "n_total": 1358053, "n_suspect": 3880, "n_bad": 0 },
+      "gaps_over_24h": [],
+      "derived_from": "PZZ_CF_RAIN",
+      "data": {
+        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "raw": "data/raw/PZZ_CF_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN72H_1d.csv"
       }
     }
   ]

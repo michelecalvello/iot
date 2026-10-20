@@ -87,6 +87,17 @@ details[open] summary::before { transform: rotate(90deg); }
 .ev-all td { background: var(--all-bg); }
 .evtab .dur-cell { color: var(--muted); }
 
+/* ---- tabella gap ---- */
+.gaptab { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.gaptab th, .gaptab td { padding: .4rem .65rem; border: 1px solid var(--border); text-align: left; }
+.gaptab thead th { background: var(--surface2); font-weight: 600; }
+.gaptab tfoot td { background: var(--surface2); font-weight: 600; border-top: 2px solid var(--border); }
+.gaptab .ts { font-family: ui-monospace, monospace; font-size: .78rem; white-space: nowrap; }
+.gaptab .n { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.gaptab .gnote { color: var(--muted); font-size: .78rem; }
+.gap-long td { background: #fff1f1; }
+@media (prefers-color-scheme: dark) { .gap-long td { background: #1f0a0a; } }
+
 /* ---- note ---- */
 .note { font-size: .8rem; color: var(--muted); margin-top: .6rem; }
 .note strong { color: var(--text); }
@@ -517,6 +528,77 @@ footer { background: var(--surface2); border-top: 1px solid var(--border); paddi
   </table>
   </div>
 </details>
+</section>
+
+<section>
+<h2>Dati mancanti nella serie originale</h2>
+<p style="font-size:.875rem;margin-bottom:.8rem;">
+  Sui 1.358.053 valori registrati a 10 min tra il 07/12/2000 e il 20/10/2026, si contano
+  <strong>45 interruzioni</strong> per un totale di <strong>2.459 valori mancanti</strong>
+  (&lt; 0,2% del periodo). Il gap più lungo (6 giorni) è avvenuto nell'agosto 2010,
+  probabilmente per guasto al datalogger o alla trasmissione.
+  I gap multipli a orario fisso (17:50–00:10) nell'aprile–agosto 2004 suggeriscono
+  un problema sistematico di trasmissione in quel periodo.
+  Nelle serie cumulate i passi con finestra di aggregazione incompleta (&lt;90%) sono
+  contrassegnati con <code>flag=1</code> e visualizzati in tratteggio nella dashboard.
+</p>
+<div class="tbl-wrap">
+<table class="gaptab">
+  <thead><tr>
+    <th>Inizio gap</th><th>Fine gap</th><th>Durata</th><th class="n">Valori mancanti</th><th>Note</th>
+  </tr></thead>
+  <tbody>
+    <tr class="gap-long"><td class="ts">2010-08-18 20:10</td><td class="ts">2010-08-25 08:10</td><td>6 gg 12 h</td><td class="n">935</td><td class="gnote">Gap più lungo della serie</td></tr>
+    <tr class="gap-long"><td class="ts">2004-04-28 17:50</td><td class="ts">2004-05-01 00:10</td><td>2 gg 6 h 20 min</td><td class="n">325</td><td class="gnote">Interruzione sistematica 2004</td></tr>
+    <tr class="gap-long"><td class="ts">2004-08-20 11:50</td><td class="ts">2004-08-22 00:10</td><td>1 gg 12 h 20 min</td><td class="n">217</td><td class="gnote"></td></tr>
+    <tr class="gap-long"><td class="ts">2004-04-21 17:50</td><td class="ts">2004-04-23 00:10</td><td>1 gg 6 h 20 min</td><td class="n">181</td><td class="gnote">Interruzione sistematica 2004</td></tr>
+    <tr><td class="ts">2022-09-01 07:30</td><td class="ts">2022-09-02 00:10</td><td>16 h 40 min</td><td class="n">99</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-03-23 08:50</td><td class="ts">2003-03-24 00:10</td><td>15 h 20 min</td><td class="n">91</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-10-30 02:30</td><td class="ts">2003-10-30 03:20</td><td>50 min</td><td class="n">4</td><td class="gnote" rowspan="3">3 gap il 30/10/2003 (cambio ora legale?)</td></tr>
+    <tr><td class="ts">2003-10-30 04:10</td><td class="ts">2003-10-30 05:10</td><td>1 h</td><td class="n">5</td></tr>
+    <tr><td class="ts">2003-10-30 06:30</td><td class="ts">2003-10-30 07:00</td><td>30 min</td><td class="n">2</td></tr>
+    <tr><td class="ts">2002-08-11 19:10</td><td class="ts">2002-08-12 05:50</td><td>10 h 40 min</td><td class="n">63</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2002-05-26 14:10</td><td class="ts">2002-05-27 01:20</td><td>11 h 10 min</td><td class="n">66</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2001-11-19 23:50</td><td class="ts">2001-11-20 09:20</td><td>9 h 30 min</td><td class="n">56</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2002-02-13 17:50</td><td class="ts">2002-02-14 01:00</td><td>7 h 10 min</td><td class="n">42</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2013-04-30 15:40</td><td class="ts">2013-04-30 21:30</td><td>5 h 50 min</td><td class="n">34</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2004-04-25 17:50</td><td class="ts">2004-04-26 00:10</td><td>6 h 20 min</td><td class="n">37</td><td class="gnote" rowspan="5">Interruzioni sistematiche 2004 (17:50–00:10)</td></tr>
+    <tr><td class="ts">2004-05-02 17:50</td><td class="ts">2004-05-03 00:10</td><td>6 h 20 min</td><td class="n">37</td></tr>
+    <tr><td class="ts">2004-05-06 17:50</td><td class="ts">2004-05-07 00:10</td><td>6 h 20 min</td><td class="n">37</td></tr>
+    <tr><td class="ts">2004-05-19 17:50</td><td class="ts">2004-05-20 00:10</td><td>6 h 20 min</td><td class="n">37</td></tr>
+    <tr><td class="ts">2004-06-22 17:50</td><td class="ts">2004-06-23 00:10</td><td>6 h 20 min</td><td class="n">37</td></tr>
+    <tr><td class="ts">2002-06-27 00:40</td><td class="ts">2002-06-27 04:00</td><td>3 h 20 min</td><td class="n">19</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-07-19 21:40</td><td class="ts">2003-07-20 00:40</td><td>3 h</td><td class="n">17</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2002-03-17 23:30</td><td class="ts">2002-03-18 02:10</td><td>2 h 40 min</td><td class="n">15</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-04-29 21:50</td><td class="ts">2003-04-30 00:10</td><td>2 h 20 min</td><td class="n">13</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2002-11-22 22:50</td><td class="ts">2002-11-23 00:50</td><td>2 h</td><td class="n">11</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-10-09 08:40</td><td class="ts">2003-10-09 10:30</td><td>1 h 50 min</td><td class="n">10</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2002-12-04 22:30</td><td class="ts">2002-12-05 00:10</td><td>1 h 40 min</td><td class="n">9</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2017-05-31 07:40</td><td class="ts">2017-05-31 09:10</td><td>1 h 30 min</td><td class="n">8</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2004-09-06 12:00</td><td class="ts">2004-09-06 13:10</td><td>1 h 10 min</td><td class="n">6</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2004-07-12 06:10</td><td class="ts">2004-07-12 07:10</td><td>1 h</td><td class="n">5</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2006-03-08 16:50</td><td class="ts">2006-03-08 17:50</td><td>1 h</td><td class="n">5</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2005-03-30 07:20</td><td class="ts">2005-03-30 08:10</td><td>50 min</td><td class="n">4</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2006-03-15 09:40</td><td class="ts">2006-03-15 10:30</td><td>50 min</td><td class="n">4</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2017-03-16 13:10</td><td class="ts">2017-03-16 14:00</td><td>50 min</td><td class="n">4</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2005-04-22 05:40</td><td class="ts">2005-04-22 06:20</td><td>40 min</td><td class="n">3</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2002-12-31 23:40</td><td class="ts">2003-01-01 00:10</td><td>30 min</td><td class="n">2</td><td class="gnote">Fine anno</td></tr>
+    <tr><td class="ts">2003-05-13 07:40</td><td class="ts">2003-05-13 08:10</td><td>30 min</td><td class="n">2</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-05-30 07:40</td><td class="ts">2003-05-30 08:10</td><td>30 min</td><td class="n">2</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-06-05 12:00</td><td class="ts">2003-06-05 12:30</td><td>30 min</td><td class="n">2</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2003-11-26 10:20</td><td class="ts">2003-11-26 10:50</td><td>30 min</td><td class="n">2</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2004-12-31 23:50</td><td class="ts">2005-01-01 00:20</td><td>30 min</td><td class="n">2</td><td class="gnote">Fine anno</td></tr>
+    <tr><td class="ts">2005-05-29 00:30</td><td class="ts">2005-05-29 01:00</td><td>30 min</td><td class="n">2</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2018-02-21 13:00</td><td class="ts">2018-02-21 13:30</td><td>30 min</td><td class="n">2</td><td class="gnote"></td></tr>
+    <tr><td class="ts">2020-01-22 11:10</td><td class="ts">2020-01-22 11:40</td><td>30 min</td><td class="n">2</td><td class="gnote" rowspan="2">2 gap consecutivi il 22/01/2020</td></tr>
+    <tr><td class="ts">2020-01-22 11:40</td><td class="ts">2020-01-22 12:10</td><td>30 min</td><td class="n">2</td></tr>
+    <tr><td class="ts">2025-10-03 06:20</td><td class="ts">2025-10-03 06:40</td><td>20 min</td><td class="n">1</td><td class="gnote"></td></tr>
+  </tbody>
+  <tfoot>
+    <tr><td colspan="3"><strong>Totale</strong></td><td class="n"><strong>2.459</strong></td><td class="gnote">su 1.358.053 record (0,18%)</td></tr>
+  </tfoot>
+</table>
+</div>
 </section>
 
 </main>

@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Superamenti soglie pluviometriche – Pozzuoli (2000–2026)</title>
+<style>
+:root {
+  --att: #f59e0b; --att-bg: #fffbeb; --att-bd: #fde68a;
+  --pre: #f97316; --pre-bg: #fff7ed; --pre-bd: #fed7aa;
+  --all: #ef4444; --all-bg: #fef2f2; --all-bd: #fecaca;
+  --muted: #6b7280; --border: #e5e7eb; --text: #111827;
+  --surface: #ffffff; --surface2: #f9fafb;
+  font-size: 15px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --att: #fbbf24; --att-bg: #1c1505; --att-bd: #78450a;
+    --pre: #fb923c; --pre-bg: #1c0e05; --pre-bd: #7c3200;
+    --all: #f87171; --all-bg: #1f0808; --all-bd: #7f1d1d;
+    --muted: #9ca3af; --border: #374151; --text: #f3f4f6;
+    --surface: #111827; --surface2: #1f2937;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--text); background: var(--surface); line-height: 1.5; }
+a { color: inherit; }
+
+/* ---- header ---- */
+header { background: #1e3a5f; color: #fff; padding: 1.5rem 2rem; }
+header h1 { font-size: 1.4rem; font-weight: 700; }
+header p { font-size: .875rem; opacity: .8; margin-top: .25rem; }
+
+/* ---- main ---- */
+main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+section { margin-bottom: 2.5rem; }
+h2 { font-size: 1.1rem; font-weight: 700; border-bottom: 2px solid var(--border); padding-bottom: .4rem; margin-bottom: 1rem; }
+h3 { font-size: 1rem; font-weight: 600; margin-bottom: .6rem; }
+
+/* ---- kpi cards ---- */
+.kpi-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.kpi { flex: 1 1 140px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .9rem 1.1rem; }
+.kpi .val { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.kpi .lbl { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+.kpi.att { border-left: 4px solid var(--att); }
+.kpi.pre { border-left: 4px solid var(--pre); }
+.kpi.all { border-left: 4px solid var(--all); }
+
+/* ---- tabelle riepilogative ---- */
+.sumtab, .rectab { width: 100%; border-collapse: collapse; font-size: .875rem; }
+.sumtab th, .sumtab td, .rectab th, .rectab td { padding: .45rem .7rem; border: 1px solid var(--border); text-align: left; }
+.sumtab thead th, .rectab thead th { background: var(--surface2); font-weight: 600; }
+.sumtab .n { text-align: center; font-weight: 600; font-size: 1rem; }
+.sumtab .col-att { color: var(--att); }
+.sumtab .col-pre { color: var(--pre); }
+.sumtab .col-all { color: var(--all); }
+.sumtab .dur, .rectab .dur { font-weight: 700; width: 4rem; }
+.sumtab .soglie { color: var(--muted); font-size: .8rem; }
+
+/* ---- badge livello ---- */
+.badge { display: inline-block; font-size: .75rem; font-weight: 700; border-radius: 4px; padding: .1em .5em; text-transform: uppercase; letter-spacing: .03em; }
+.badge.att { background: var(--att-bg); color: var(--att); border: 1px solid var(--att-bd); }
+.badge.pre { background: var(--pre-bg); color: var(--pre); border: 1px solid var(--pre-bd); }
+.badge.all { background: var(--all-bg); color: var(--all); border: 1px solid var(--all-bd); }
+
+/* ---- details per anno ---- */
+details { margin-bottom: .75rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+details[open] > summary { border-bottom: 1px solid var(--border); }
+summary { display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem; cursor: pointer; background: var(--surface2); list-style: none; user-select: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▶"; font-size: .7rem; color: var(--muted); transition: transform .15s; }
+details[open] summary::before { transform: rotate(90deg); }
+.yr { font-weight: 700; font-size: 1.05rem; min-width: 3.2rem; }
+.ev-count { font-size: .85rem; color: var(--muted); }
+
+/* ---- tabella eventi ---- */
+.tbl-wrap { overflow-x: auto; padding: .75rem; }
+.evtab { width: 100%; border-collapse: collapse; font-size: .8rem; white-space: nowrap; }
+.evtab th { background: var(--surface2); padding: .4rem .6rem; text-align: left; border-bottom: 2px solid var(--border); font-weight: 600; position: sticky; top: 0; }
+.evtab td { padding: .35rem .6rem; border-bottom: 1px solid var(--border); }
+.evtab .num { text-align: right; font-variant-numeric: tabular-nums; }
+.evtab .thr { color: var(--muted); }
+.evtab .dur { font-weight: 700; }
+.evtab .ts { font-family: ui-monospace, monospace; font-size: .78rem; }
+.ev-att td { background: var(--att-bg); }
+.ev-pre td { background: var(--pre-bg); }
+.ev-all td { background: var(--all-bg); }
+.evtab .dur-cell { color: var(--muted); }
+
+/* ---- note ---- */
+.note { font-size: .8rem; color: var(--muted); margin-top: .6rem; }
+.note strong { color: var(--text); }
+
+/* ---- footer ---- */
+footer { background: var(--surface2); border-top: 1px solid var(--border); padding: 1rem 2rem; font-size: .8rem; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Superamenti delle soglie pluviometriche — Stazione di Pozzuoli</h1>
+  <p>Centro Funzionale Multirischi della Protezione Civile, Regione Campania · 07/12/2000 – 20/10/2026 · Orari in UTC+1</p>
+</header>
+
+<main>
+
+<section>
+<h2>Soglie di riferimento</h2>
+<p style="font-size:.875rem;margin-bottom:.8rem;">Le soglie sono definite dal Centro Funzionale Regionale della Campania per la stazione pluviometrica di Pozzuoli (cod. CF Campania). Il livello <strong>Attenzione</strong> non è definito per la cumulata a 1 h; il livello <strong>Preallarme</strong> non è definito per la cumulata a 1 h.</p>
+<table class="sumtab">
+<thead><tr><th>Durata</th>
+<th class="col-att">Attenzione</th><th class="col-pre">Preallarme</th><th class="col-all">Allarme</th>
+<th>Soglie (mm)</th></tr></thead><tbody>
+<tr><td class="dur">1h</td>
+<td class="n col-att">–</td>
+<td class="n col-pre">–</td>
+<td class="n col-all">2</td>
+<td class="soglie">Allarme: 52</td></tr>
+<tr><td class="dur">3h</td>
+<td class="n col-att">11</td>
+<td class="n col-pre">5</td>
+<td class="n col-all">2</td>
+<td class="soglie">Allarme: 74 / Preallarme: 63 / Attenzione: 48</td></tr>
+<tr><td class="dur">6h</td>
+<td class="n col-att">12</td>
+<td class="n col-pre">6</td>
+<td class="n col-all">5</td>
+<td class="soglie">Allarme: 84 / Preallarme: 72 / Attenzione: 55</td></tr>
+<tr><td class="dur">24h</td>
+<td class="n col-att">15</td>
+<td class="n col-pre">7</td>
+<td class="n col-all">4</td>
+<td class="soglie">Allarme: 105 / Preallarme: 90 / Attenzione: 68</td></tr>
+<tr><td class="dur">48h</td>
+<td class="n col-att">14</td>
+<td class="n col-pre">8</td>
+<td class="n col-all">6</td>
+<td class="soglie">Allarme: 128 / Preallarme: 109 / Attenzione: 83</td></tr>
+<tr><td class="dur">72h</td>
+<td class="n col-att">15</td>
+<td class="n col-pre">6</td>
+<td class="n col-all">4</td>
+<td class="soglie">Allarme: 142 / Preallarme: 121 / Attenzione: 93</td></tr>
+</tbody></table>
+<p class="note" style="margin-top:.5rem;">Le serie di pioggia cumulata usano finestra mobile alla risoluzione originale (10 min): il valore a ogni timestamp è la somma dei mm caduti nelle N ore precedenti (intervallo (t−N h, t]).</p>
+</section>
+
+<section>
+<h2>Riepilogo (2000–2026)</h2>
+<div class="kpi-row">
+  <div class="kpi"><div class="val">122</div><div class="lbl">Superamenti totali (eventi)</div></div>
+  <div class="kpi all"><div class="val">23</div><div class="lbl">Livello Allarme</div></div>
+  <div class="kpi pre"><div class="val">32</div><div class="lbl">Livello Preallarme</div></div>
+  <div class="kpi att"><div class="val">67</div><div class="lbl">Livello Attenzione</div></div>
+</div>
+<p class="note">Ogni evento corrisponde a un periodo continuo in cui la cumulata si è mantenuta sopra la soglia. Periodi distinti nella stessa durata sono contati separatamente. Un evento può comparire in più righe se interessa più livelli o più durate.</p>
+</section>
+
+<section>
+<h2>Record assoluti per durata</h2>
+<table class="rectab"><thead><tr><th>Durata</th><th>Valore massimo registrato</th><th>Data e ora</th><th>Livello massimo raggiunto</th></tr></thead><tbody>
+<tr><td class="dur">1h</td><td class="num">80.0 mm</td><td class="ts">2001-09-15 03:10</td><td><span class="badge all">Allarme</span></td></tr>
+<tr><td class="dur">3h</td><td class="num">139.4 mm</td><td class="ts">2001-09-15 05:10</td><td><span class="badge all">Allarme</span></td></tr>
+<tr><td class="dur">6h</td><td class="num">140.4 mm</td><td class="ts">2001-09-15 05:20</td><td><span class="badge all">Allarme</span></td></tr>
+<tr><td class="dur">24h</td><td class="num">140.4 mm</td><td class="ts">2001-09-15 05:20</td><td><span class="badge all">Allarme</span></td></tr>
+<tr><td class="dur">48h</td><td class="num">142.0 mm</td><td class="ts">2001-09-16 23:00</td><td><span class="badge all">Allarme</span></td></tr>
+<tr><td class="dur">72h</td><td class="num">178.1 mm</td><td class="ts">2026-10-10 18:40</td><td><span class="badge all">Allarme</span></td></tr>
+</tbody></table>
+</section>
+
+<section>
+<h2>Dettaglio cronologico degli eventi</h2>
+<p style="font-size:.875rem;margin-bottom:.9rem;">Sono elencati tutti i periodi di superamento, dal più recente al più antico. Per ogni evento: livello raggiunto, durata di riferimento, valore di picco (mm), soglia corrispondente, ora del picco, inizio e fine del superamento, durata totale sopra soglia. ⚠ = finestra con copertura &lt;90% (valore potenzialmente sottostimato).</p>
+
+<details open>
+  <summary><span class="yr">2026</span> <span class="ev-count">15 superamenti</span> <span class="badge all">Allarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">55.3</td><td class="num thr">48</td><td class="num">115%</td><td class="ts">2026-10-09 04:10</td><td class="ts">2026-10-09 03:40</td><td class="ts">2026-10-09 04:50</td><td class="dur-cell">1h 20min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">6h</td><td class="num">86.0</td><td class="num thr">84</td><td class="num">102%</td><td class="ts">2026-10-09 05:20</td><td class="ts">2026-10-09 04:20</td><td class="ts">2026-10-09 05:20</td><td class="dur-cell">1h 10min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">6h</td><td class="num">86.0</td><td class="num thr">72</td><td class="num">119%</td><td class="ts">2026-10-09 05:20</td><td class="ts">2026-10-09 03:30</td><td class="ts">2026-10-09 05:30</td><td class="dur-cell">2h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">86.0</td><td class="num thr">55</td><td class="num">156%</td><td class="ts">2026-10-09 05:20</td><td class="ts">2026-10-09 02:50</td><td class="ts">2026-10-09 07:40</td><td class="dur-cell">5h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">24h</td><td class="num">109.8</td><td class="num thr">105</td><td class="num">105%</td><td class="ts">2026-10-09 10:20</td><td class="ts">2026-10-09 09:50</td><td class="ts">2026-10-09 10:20</td><td class="dur-cell">40 min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">109.8</td><td class="num thr">90</td><td class="num">122%</td><td class="ts">2026-10-09 10:20</td><td class="ts">2026-10-09 03:30</td><td class="ts">2026-10-09 23:20</td><td class="dur-cell">20h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">109.8</td><td class="num thr">68</td><td class="num">161%</td><td class="ts">2026-10-09 10:20</td><td class="ts">2026-10-08 23:50</td><td class="ts">2026-10-10 01:40</td><td class="dur-cell">26h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">48h</td><td class="num">139.6</td><td class="num thr">128</td><td class="num">109%</td><td class="ts">2026-10-09 11:20</td><td class="ts">2026-10-09 04:50</td><td class="ts">2026-10-10 02:10</td><td class="dur-cell">21h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">139.6</td><td class="num thr">109</td><td class="num">128%</td><td class="ts">2026-10-09 11:20</td><td class="ts">2026-10-09 03:30</td><td class="ts">2026-10-10 23:40</td><td class="dur-cell">44h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">139.6</td><td class="num thr">83</td><td class="num">168%</td><td class="ts">2026-10-09 11:20</td><td class="ts">2026-10-09 02:20</td><td class="ts">2026-10-11 02:40</td><td class="dur-cell">48h 30min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">72h</td><td class="num">142.8</td><td class="num thr">142</td><td class="num">101%</td><td class="ts">2026-10-09 11:20</td><td class="ts">2026-10-09 10:50</td><td class="ts">2026-10-09 17:40</td><td class="dur-cell">7h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">48h</td><td class="num">136.1</td><td class="num thr">128</td><td class="num">106%</td><td class="ts">2026-10-10 18:40</td><td class="ts">2026-10-10 16:10</td><td class="ts">2026-10-10 23:20</td><td class="dur-cell">7h 20min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">72h</td><td class="num">178.1</td><td class="num thr">142</td><td class="num">125%</td><td class="ts">2026-10-10 18:40</td><td class="ts">2026-10-10 05:20</td><td class="ts">2026-10-11 10:30</td><td class="dur-cell">29h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">72h</td><td class="num">178.1</td><td class="num thr">121</td><td class="num">147%</td><td class="ts">2026-10-10 18:40</td><td class="ts">2026-10-09 03:40</td><td class="ts">2026-10-11 23:30</td><td class="dur-cell">68h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">178.1</td><td class="num thr">93</td><td class="num">192%</td><td class="ts">2026-10-10 18:40</td><td class="ts">2026-10-09 02:30</td><td class="ts">2026-10-12 02:10</td><td class="dur-cell">71h 50min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2022</span> <span class="ev-count">6 superamenti</span> <span class="badge att">Attenzione</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">51.6</td><td class="num thr">48</td><td class="num">108%</td><td class="ts">2022-09-25 10:40</td><td class="ts">2022-09-25 09:40</td><td class="ts">2022-09-25 10:40</td><td class="dur-cell">1h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">61.0</td><td class="num thr">55</td><td class="num">111%</td><td class="ts">2022-09-25 13:40</td><td class="ts">2022-09-25 12:00</td><td class="ts">2022-09-25 13:40</td><td class="dur-cell">1h 50min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">87.0</td><td class="num thr">68</td><td class="num">128%</td><td class="ts">2022-09-26 00:00</td><td class="ts">2022-09-25 15:20</td><td class="ts">2022-09-26 07:50</td><td class="dur-cell">16h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">98.2</td><td class="num thr">83</td><td class="num">118%</td><td class="ts">2022-09-27 03:50</td><td class="ts">2022-09-25 22:20</td><td class="ts">2022-09-27 07:50</td><td class="dur-cell">33h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">101.2</td><td class="num thr">93</td><td class="num">109%</td><td class="ts">2022-09-27 20:40</td><td class="ts">2022-09-26 10:20</td><td class="ts">2022-09-28 07:40</td><td class="dur-cell">45h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">79.6</td><td class="num thr">68</td><td class="num">117%</td><td class="ts">2022-11-26 17:20</td><td class="ts">2022-11-26 13:00</td><td class="ts">2022-11-27 02:30</td><td class="dur-cell">13h 40min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2021</span> <span class="ev-count">11 superamenti</span> <span class="badge pre">Preallarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">49.2</td><td class="num thr">48</td><td class="num">103%</td><td class="ts">2021-10-05 17:40</td><td class="ts">2021-10-05 17:00</td><td class="ts">2021-10-05 17:50</td><td class="dur-cell">1h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">85.4</td><td class="num thr">68</td><td class="num">126%</td><td class="ts">2021-10-05 23:10</td><td class="ts">2021-10-05 16:50</td><td class="ts">2021-10-06 05:10</td><td class="dur-cell">12h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">125.2</td><td class="num thr">109</td><td class="num">115%</td><td class="ts">2021-10-07 02:30</td><td class="ts">2021-10-06 20:20</td><td class="ts">2021-10-07 05:10</td><td class="dur-cell">9h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">125.2</td><td class="num thr">83</td><td class="num">151%</td><td class="ts">2021-10-07 02:30</td><td class="ts">2021-10-05 17:10</td><td class="ts">2021-10-07 16:20</td><td class="dur-cell">47h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">72h</td><td class="num">128.8</td><td class="num thr">121</td><td class="num">106%</td><td class="ts">2021-10-07 07:00</td><td class="ts">2021-10-07 02:30</td><td class="ts">2021-10-08 05:00</td><td class="dur-cell">26h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">128.8</td><td class="num thr">93</td><td class="num">138%</td><td class="ts">2021-10-07 07:00</td><td class="ts">2021-10-06 14:00</td><td class="ts">2021-10-08 14:50</td><td class="dur-cell">49h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">79.4</td><td class="num thr">68</td><td class="num">117%</td><td class="ts">2021-11-26 00:50</td><td class="ts">2021-11-25 21:50</td><td class="ts">2021-11-26 06:30</td><td class="dur-cell">8h 50min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">93.2</td><td class="num thr">83</td><td class="num">112%</td><td class="ts">2021-11-27 03:20</td><td class="ts">2021-11-26 11:50</td><td class="ts">2021-11-27 06:50</td><td class="dur-cell">19h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">83.8</td><td class="num thr">83</td><td class="num">101%</td><td class="ts">2021-11-27 07:50</td><td class="ts">2021-11-27 07:40</td><td class="ts">2021-11-27 08:20</td><td class="dur-cell">50 min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">106.4</td><td class="num thr">93</td><td class="num">114%</td><td class="ts">2021-11-28 00:40</td><td class="ts">2021-11-27 03:10</td><td class="ts">2021-11-28 09:30</td><td class="dur-cell">30h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">99.4</td><td class="num thr">93</td><td class="num">107%</td><td class="ts">2021-11-28 15:30</td><td class="ts">2021-11-28 10:00</td><td class="ts">2021-11-28 19:00</td><td class="dur-cell">9h 10min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2019</span> <span class="ev-count">9 superamenti</span> <span class="badge all">Allarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">57.0</td><td class="num thr">48</td><td class="num">119%</td><td class="ts">2019-11-13 01:40</td><td class="ts">2019-11-13 01:10</td><td class="ts">2019-11-13 03:00</td><td class="dur-cell">2h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">58.6</td><td class="num thr">55</td><td class="num">107%</td><td class="ts">2019-11-13 03:40</td><td class="ts">2019-11-13 01:20</td><td class="ts">2019-11-13 05:40</td><td class="dur-cell">4h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">74.8</td><td class="num thr">68</td><td class="num">110%</td><td class="ts">2019-11-13 12:10</td><td class="ts">2019-11-13 01:10</td><td class="ts">2019-11-13 15:10</td><td class="dur-cell">14h 10min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">48h</td><td class="num">128.2</td><td class="num thr">128</td><td class="num">100%</td><td class="ts">2019-11-14 10:10</td><td class="ts">2019-11-14 10:10</td><td class="ts">2019-11-14 10:20</td><td class="dur-cell">20 min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">48h</td><td class="num">130.0</td><td class="num thr">128</td><td class="num">102%</td><td class="ts">2019-11-14 11:30</td><td class="ts">2019-11-14 11:00</td><td class="ts">2019-11-14 13:20</td><td class="dur-cell">2h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">130.0</td><td class="num thr">109</td><td class="num">119%</td><td class="ts">2019-11-14 11:30</td><td class="ts">2019-11-14 09:40</td><td class="ts">2019-11-15 00:00</td><td class="dur-cell">14h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">130.0</td><td class="num thr">83</td><td class="num">157%</td><td class="ts">2019-11-14 11:30</td><td class="ts">2019-11-14 04:50</td><td class="ts">2019-11-15 00:40</td><td class="dur-cell">20h 00min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">72h</td><td class="num">135.0</td><td class="num thr">121</td><td class="num">112%</td><td class="ts">2019-11-14 11:30</td><td class="ts">2019-11-14 09:50</td><td class="ts">2019-11-15 15:10</td><td class="dur-cell">29h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">135.0</td><td class="num thr">93</td><td class="num">145%</td><td class="ts">2019-11-14 11:30</td><td class="ts">2019-11-14 09:20</td><td class="ts">2019-11-16 00:30</td><td class="dur-cell">39h 20min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2017</span> <span class="ev-count">9 superamenti</span> <span class="badge all">Allarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">3h</td><td class="num">63.6</td><td class="num thr">63</td><td class="num">101%</td><td class="ts">2017-09-07 13:20</td><td class="ts">2017-09-07 13:20</td><td class="ts">2017-09-07 13:20</td><td class="dur-cell">10 min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">63.6</td><td class="num thr">48</td><td class="num">132%</td><td class="ts">2017-09-07 13:20</td><td class="ts">2017-09-07 11:00</td><td class="ts">2017-09-07 13:50</td><td class="dur-cell">3h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">6h</td><td class="num">99.8</td><td class="num thr">84</td><td class="num">119%</td><td class="ts">2017-09-07 14:30</td><td class="ts">2017-09-07 13:20</td><td class="ts">2017-09-07 16:00</td><td class="dur-cell">2h 50min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">6h</td><td class="num">99.8</td><td class="num thr">72</td><td class="num">139%</td><td class="ts">2017-09-07 14:30</td><td class="ts">2017-09-07 13:10</td><td class="ts">2017-09-07 16:20</td><td class="dur-cell">3h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">99.8</td><td class="num thr">55</td><td class="num">181%</td><td class="ts">2017-09-07 14:30</td><td class="ts">2017-09-07 11:30</td><td class="ts">2017-09-07 16:50</td><td class="dur-cell">5h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">99.8</td><td class="num thr">90</td><td class="num">111%</td><td class="ts">2017-09-07 14:30</td><td class="ts">2017-09-07 13:20</td><td class="ts">2017-09-08 09:50</td><td class="dur-cell">20h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">99.8</td><td class="num thr">68</td><td class="num">147%</td><td class="ts">2017-09-07 14:30</td><td class="ts">2017-09-07 13:10</td><td class="ts">2017-09-08 10:20</td><td class="dur-cell">21h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">99.8</td><td class="num thr">83</td><td class="num">120%</td><td class="ts">2017-09-07 14:30</td><td class="ts">2017-09-07 13:20</td><td class="ts">2017-09-09 10:00</td><td class="dur-cell">44h 50min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">102.0</td><td class="num thr">93</td><td class="num">110%</td><td class="ts">2017-09-09 10:00</td><td class="ts">2017-09-07 13:40</td><td class="ts">2017-09-10 09:50</td><td class="dur-cell">68h 20min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2014</span> <span class="ev-count">1 superamento</span> <span class="badge att">Attenzione</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">48.6</td><td class="num thr">48</td><td class="num">101%</td><td class="ts">2014-11-26 15:30</td><td class="ts">2014-11-26 15:30</td><td class="ts">2014-11-26 15:40</td><td class="dur-cell">20 min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2011</span> <span class="ev-count">14 superamenti</span> <span class="badge all">Allarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">62.4</td><td class="num thr">48</td><td class="num">130%</td><td class="ts">2011-06-01 11:50</td><td class="ts">2011-06-01 11:20</td><td class="ts">2011-06-01 13:00</td><td class="dur-cell">1h 50min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">64.2</td><td class="num thr">55</td><td class="num">117%</td><td class="ts">2011-06-01 13:50</td><td class="ts">2011-06-01 11:30</td><td class="ts">2011-06-01 15:30</td><td class="dur-cell">4h 10min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">3h</td><td class="num">74.0</td><td class="num thr">74</td><td class="num">100%</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 11:40</td><td class="dur-cell">20 min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">3h</td><td class="num">74.0</td><td class="num thr">63</td><td class="num">117%</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 11:10</td><td class="ts">2011-11-06 12:30</td><td class="dur-cell">1h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">74.0</td><td class="num thr">48</td><td class="num">154%</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 10:20</td><td class="ts">2011-11-06 13:00</td><td class="dur-cell">2h 50min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">6h</td><td class="num">86.4</td><td class="num thr">84</td><td class="num">103%</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 11:20</td><td class="ts">2011-11-06 12:10</td><td class="dur-cell">1h 00min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">6h</td><td class="num">86.4</td><td class="num thr">72</td><td class="num">120%</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 10:50</td><td class="ts">2011-11-06 14:50</td><td class="dur-cell">4h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">86.4</td><td class="num thr">55</td><td class="num">157%</td><td class="ts">2011-11-06 11:30</td><td class="ts">2011-11-06 10:20</td><td class="ts">2011-11-06 15:50</td><td class="dur-cell">5h 40min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">24h</td><td class="num">111.6</td><td class="num thr">105</td><td class="num">106%</td><td class="ts">2011-11-06 19:30</td><td class="ts">2011-11-06 11:50</td><td class="ts">2011-11-07 03:20</td><td class="dur-cell">15h 40min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">111.6</td><td class="num thr">90</td><td class="num">124%</td><td class="ts">2011-11-06 19:30</td><td class="ts">2011-11-06 11:10</td><td class="ts">2011-11-07 06:40</td><td class="dur-cell">19h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">111.6</td><td class="num thr">68</td><td class="num">164%</td><td class="ts">2011-11-06 19:30</td><td class="ts">2011-11-06 10:20</td><td class="ts">2011-11-07 09:50</td><td class="dur-cell">23h 40min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">112.2</td><td class="num thr">109</td><td class="num">103%</td><td class="ts">2011-11-07 04:40</td><td class="ts">2011-11-06 19:20</td><td class="ts">2011-11-08 03:10</td><td class="dur-cell">32h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">112.2</td><td class="num thr">83</td><td class="num">135%</td><td class="ts">2011-11-07 04:40</td><td class="ts">2011-11-06 10:40</td><td class="ts">2011-11-08 08:30</td><td class="dur-cell">46h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">114.0</td><td class="num thr">93</td><td class="num">123%</td><td class="ts">2011-11-08 10:10</td><td class="ts">2011-11-06 11:10</td><td class="ts">2011-11-09 06:10</td><td class="dur-cell">67h 10min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2010</span> <span class="ev-count">3 superamenti</span> <span class="badge pre">Preallarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">6h</td><td class="num">76.4</td><td class="num thr">72</td><td class="num">106%</td><td class="ts">2010-07-31 00:20</td><td class="ts">2010-07-30 23:50</td><td class="ts">2010-07-31 01:20</td><td class="dur-cell">1h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">76.4</td><td class="num thr">55</td><td class="num">139%</td><td class="ts">2010-07-31 00:20</td><td class="ts">2010-07-30 23:30</td><td class="ts">2010-07-31 01:50</td><td class="dur-cell">2h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">76.4</td><td class="num thr">68</td><td class="num">112%</td><td class="ts">2010-07-31 00:20</td><td class="ts">2010-07-30 23:30</td><td class="ts">2010-07-31 19:30</td><td class="dur-cell">20h 10min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2009</span> <span class="ev-count">9 superamenti</span> <span class="badge pre">Preallarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">72.0</td><td class="num thr">68</td><td class="num">106%</td><td class="ts">2009-01-03 18:00</td><td class="ts">2009-01-03 07:20</td><td class="ts">2009-01-03 21:40</td><td class="dur-cell">14h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">72.0</td><td class="num thr">68</td><td class="num">106%</td><td class="ts">2009-09-15 06:00</td><td class="ts">2009-09-15 04:40</td><td class="ts">2009-09-15 13:10</td><td class="dur-cell">8h 40min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">109.0</td><td class="num thr">109</td><td class="num">100%</td><td class="ts">2009-09-16 09:30</td><td class="ts">2009-09-16 09:30</td><td class="ts">2009-09-16 13:00</td><td class="dur-cell">3h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">109.0</td><td class="num thr">83</td><td class="num">131%</td><td class="ts">2009-09-16 09:30</td><td class="ts">2009-09-16 06:10</td><td class="ts">2009-09-16 13:40</td><td class="dur-cell">7h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">119.8</td><td class="num thr">93</td><td class="num">129%</td><td class="ts">2009-09-17 02:20</td><td class="ts">2009-09-16 06:40</td><td class="ts">2009-09-17 13:50</td><td class="dur-cell">31h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">55.0</td><td class="num thr">55</td><td class="num">100%</td><td class="ts">2009-10-23 20:00</td><td class="ts">2009-10-23 20:00</td><td class="ts">2009-10-23 20:00</td><td class="dur-cell">10 min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">72.0</td><td class="num thr">68</td><td class="num">106%</td><td class="ts">2009-10-23 20:00</td><td class="ts">2009-10-23 19:20</td><td class="ts">2009-10-23 23:50</td><td class="dur-cell">4h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">91.8</td><td class="num thr">83</td><td class="num">111%</td><td class="ts">2009-10-23 20:00</td><td class="ts">2009-10-23 19:00</td><td class="ts">2009-10-24 12:00</td><td class="dur-cell">17h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">93.4</td><td class="num thr">93</td><td class="num">100%</td><td class="ts">2009-10-24 14:50</td><td class="ts">2009-10-24 14:30</td><td class="ts">2009-10-25 10:50</td><td class="dur-cell">20h 30min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2006</span> <span class="ev-count">1 superamento</span> <span class="badge att">Attenzione</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">102.6</td><td class="num thr">93</td><td class="num">110%</td><td class="ts">2006-09-18 04:40</td><td class="ts">2006-09-18 04:30</td><td class="ts">2006-09-18 05:00</td><td class="dur-cell">40 min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2005</span> <span class="ev-count">15 superamenti</span> <span class="badge all">Allarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">3h</td><td class="num">72.2</td><td class="num thr">63</td><td class="num">115%</td><td class="ts">2005-03-04 16:10</td><td class="ts">2005-03-04 15:50</td><td class="ts">2005-03-04 17:00</td><td class="dur-cell">1h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">72.2</td><td class="num thr">48</td><td class="num">150%</td><td class="ts">2005-03-04 16:10</td><td class="ts">2005-03-04 14:50</td><td class="ts">2005-03-04 17:30</td><td class="dur-cell">2h 50min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">6h</td><td class="num">90.4</td><td class="num thr">84</td><td class="num">108%</td><td class="ts">2005-03-04 16:10</td><td class="ts">2005-03-04 15:50</td><td class="ts">2005-03-04 18:40</td><td class="dur-cell">3h 00min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">6h</td><td class="num">90.4</td><td class="num thr">72</td><td class="num">126%</td><td class="ts">2005-03-04 16:10</td><td class="ts">2005-03-04 15:10</td><td class="ts">2005-03-04 20:00</td><td class="dur-cell">5h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">90.4</td><td class="num thr">55</td><td class="num">164%</td><td class="ts">2005-03-04 16:10</td><td class="ts">2005-03-04 14:40</td><td class="ts">2005-03-04 20:30</td><td class="dur-cell">6h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">24h</td><td class="num">128.6</td><td class="num thr">105</td><td class="num">122%</td><td class="ts">2005-03-05 00:20</td><td class="ts">2005-03-04 16:00</td><td class="ts">2005-03-05 11:10</td><td class="dur-cell">19h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">128.6</td><td class="num thr">90</td><td class="num">143%</td><td class="ts">2005-03-05 00:20</td><td class="ts">2005-03-04 15:30</td><td class="ts">2005-03-05 13:20</td><td class="dur-cell">22h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">128.6</td><td class="num thr">68</td><td class="num">189%</td><td class="ts">2005-03-05 00:20</td><td class="ts">2005-03-04 14:40</td><td class="ts">2005-03-05 14:30</td><td class="dur-cell">24h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">48h</td><td class="num">133.2</td><td class="num thr">128</td><td class="num">104%</td><td class="ts">2005-03-06 00:10</td><td class="ts">2005-03-05 00:00</td><td class="ts">2005-03-06 04:50</td><td class="dur-cell">29h 00min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">133.2</td><td class="num thr">109</td><td class="num">122%</td><td class="ts">2005-03-06 00:10</td><td class="ts">2005-03-04 16:30</td><td class="ts">2005-03-06 11:20</td><td class="dur-cell">43h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">133.2</td><td class="num thr">83</td><td class="num">160%</td><td class="ts">2005-03-06 00:10</td><td class="ts">2005-03-04 15:10</td><td class="ts">2005-03-06 14:10</td><td class="dur-cell">47h 10min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">72h</td><td class="num">149.0</td><td class="num thr">142</td><td class="num">105%</td><td class="ts">2005-03-07 01:20</td><td class="ts">2005-03-06 19:40</td><td class="ts">2005-03-07 05:50</td><td class="dur-cell">10h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">72h</td><td class="num">149.0</td><td class="num thr">121</td><td class="num">123%</td><td class="ts">2005-03-07 01:20</td><td class="ts">2005-03-04 20:40</td><td class="ts">2005-03-07 11:40</td><td class="dur-cell">63h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">149.0</td><td class="num thr">93</td><td class="num">160%</td><td class="ts">2005-03-07 01:20</td><td class="ts">2005-03-04 15:40</td><td class="ts">2005-03-07 14:20</td><td class="dur-cell">70h 50min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">55.6</td><td class="num thr">55</td><td class="num">101%</td><td class="ts">2005-11-06 23:10</td><td class="ts">2005-11-06 23:00</td><td class="ts">2005-11-06 23:30</td><td class="dur-cell">40 min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2003</span> <span class="ev-count">9 superamenti</span> <span class="badge pre">Preallarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">3h</td><td class="num">68.6</td><td class="num thr">63</td><td class="num">109%</td><td class="ts">2003-09-09 18:30</td><td class="ts">2003-09-09 18:10</td><td class="ts">2003-09-09 19:00</td><td class="dur-cell">1h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">68.6</td><td class="num thr">48</td><td class="num">143%</td><td class="ts">2003-09-09 18:30</td><td class="ts">2003-09-09 18:00</td><td class="ts">2003-09-09 19:20</td><td class="dur-cell">1h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">68.6</td><td class="num thr">55</td><td class="num">125%</td><td class="ts">2003-09-09 18:30</td><td class="ts">2003-09-09 18:10</td><td class="ts">2003-09-09 22:10</td><td class="dur-cell">4h 10min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">97.4</td><td class="num thr">90</td><td class="num">108%</td><td class="ts">2003-09-10 05:30</td><td class="ts">2003-09-10 05:00</td><td class="ts">2003-09-10 06:20</td><td class="dur-cell">1h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">97.4</td><td class="num thr">68</td><td class="num">143%</td><td class="ts">2003-09-10 05:30</td><td class="ts">2003-09-09 18:10</td><td class="ts">2003-09-10 16:30</td><td class="dur-cell">22h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">94.0</td><td class="num thr">90</td><td class="num">104%</td><td class="ts">2003-09-10 07:30</td><td class="ts">2003-09-10 06:40</td><td class="ts">2003-09-10 15:50</td><td class="dur-cell">9h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">114.4</td><td class="num thr">109</td><td class="num">105%</td><td class="ts">2003-09-10 07:30</td><td class="ts">2003-09-10 05:00</td><td class="ts">2003-09-10 08:40</td><td class="dur-cell">3h 50min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">114.4</td><td class="num thr">83</td><td class="num">138%</td><td class="ts">2003-09-10 07:30</td><td class="ts">2003-09-09 18:10</td><td class="ts">2003-09-11 16:10</td><td class="dur-cell">46h 10min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">114.4</td><td class="num thr">93</td><td class="num">123%</td><td class="ts">2003-09-10 07:30</td><td class="ts">2003-09-10 04:50</td><td class="ts">2003-09-12 15:40</td><td class="dur-cell">59h 00min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2002</span> <span class="ev-count">3 superamenti</span> <span class="badge pre">Preallarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">108.6</td><td class="num thr">83</td><td class="num">131%</td><td class="ts">2002-09-23 03:50</td><td class="ts">2002-09-22 16:50</td><td class="ts">2002-09-23 11:10</td><td class="dur-cell">18h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">72h</td><td class="num">124.8</td><td class="num thr">121</td><td class="num">103%</td><td class="ts">2002-09-24 00:50</td><td class="ts">2002-09-23 21:10</td><td class="ts">2002-09-24 04:30</td><td class="dur-cell">7h 30min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">124.8</td><td class="num thr">93</td><td class="num">134%</td><td class="ts">2002-09-24 00:50</td><td class="ts">2002-09-23 00:40</td><td class="ts">2002-09-24 11:10</td><td class="dur-cell">34h 40min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="yr">2001</span> <span class="ev-count">17 superamenti</span> <span class="badge all">Allarme</span></summary>
+  <div class="tbl-wrap">
+  <table class="evtab">
+    <thead><tr>
+      <th>Livello</th><th>Durata</th>
+      <th title="Valore di picco registrato">Picco (mm)</th>
+      <th title="Valore soglia">Soglia (mm)</th>
+      <th>% soglia</th>
+      <th>Tempo picco</th><th>Inizio</th><th>Fine</th>
+      <th>Durata superamento</th>
+    </tr></thead>
+    <tbody><tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">1h</td><td class="num">80.0</td><td class="num thr">52</td><td class="num">154%</td><td class="ts">2001-09-15 03:10</td><td class="ts">2001-09-15 03:00</td><td class="ts">2001-09-15 03:40</td><td class="dur-cell">50 min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">1h</td><td class="num">52.0</td><td class="num thr">52</td><td class="num">100%</td><td class="ts">2001-09-15 05:10</td><td class="ts">2001-09-15 05:10</td><td class="ts">2001-09-15 05:10</td><td class="dur-cell">10 min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">3h</td><td class="num">139.4</td><td class="num thr">74</td><td class="num">188%</td><td class="ts">2001-09-15 05:10</td><td class="ts">2001-09-15 03:10</td><td class="ts">2001-09-15 06:00</td><td class="dur-cell">3h 00min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">3h</td><td class="num">139.4</td><td class="num thr">63</td><td class="num">221%</td><td class="ts">2001-09-15 05:10</td><td class="ts">2001-09-15 03:10</td><td class="ts">2001-09-15 06:00</td><td class="dur-cell">3h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">3h</td><td class="num">139.4</td><td class="num thr">48</td><td class="num">290%</td><td class="ts">2001-09-15 05:10</td><td class="ts">2001-09-15 03:00</td><td class="ts">2001-09-15 07:10</td><td class="dur-cell">4h 20min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">6h</td><td class="num">140.4</td><td class="num thr">84</td><td class="num">167%</td><td class="ts">2001-09-15 05:20</td><td class="ts">2001-09-15 03:30</td><td class="ts">2001-09-15 08:50</td><td class="dur-cell">5h 30min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">6h</td><td class="num">140.4</td><td class="num thr">72</td><td class="num">195%</td><td class="ts">2001-09-15 05:20</td><td class="ts">2001-09-15 03:10</td><td class="ts">2001-09-15 09:00</td><td class="dur-cell">6h 00min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">6h</td><td class="num">140.4</td><td class="num thr">55</td><td class="num">255%</td><td class="ts">2001-09-15 05:20</td><td class="ts">2001-09-15 03:00</td><td class="ts">2001-09-15 09:30</td><td class="dur-cell">6h 40min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">24h</td><td class="num">140.4</td><td class="num thr">105</td><td class="num">134%</td><td class="ts">2001-09-15 05:20</td><td class="ts">2001-09-15 04:30</td><td class="ts">2001-09-16 02:40</td><td class="dur-cell">22h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">24h</td><td class="num">140.4</td><td class="num thr">90</td><td class="num">156%</td><td class="ts">2001-09-15 05:20</td><td class="ts">2001-09-15 04:20</td><td class="ts">2001-09-16 02:50</td><td class="dur-cell">22h 40min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">24h</td><td class="num">140.4</td><td class="num thr">68</td><td class="num">206%</td><td class="ts">2001-09-15 05:20</td><td class="ts">2001-09-15 03:10</td><td class="ts">2001-09-16 03:00</td><td class="dur-cell">24h 00min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">48h</td><td class="num">142.0</td><td class="num thr">128</td><td class="num">111%</td><td class="ts">2001-09-16 23:00</td><td class="ts">2001-09-15 04:50</td><td class="ts">2001-09-17 02:30</td><td class="dur-cell">45h 50min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">48h</td><td class="num">142.0</td><td class="num thr">109</td><td class="num">130%</td><td class="ts">2001-09-16 23:00</td><td class="ts">2001-09-15 04:30</td><td class="ts">2001-09-17 02:40</td><td class="dur-cell">46h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">48h</td><td class="num">142.0</td><td class="num thr">83</td><td class="num">171%</td><td class="ts">2001-09-16 23:00</td><td class="ts">2001-09-15 03:20</td><td class="ts">2001-09-17 02:50</td><td class="dur-cell">47h 40min</td></tr>
+<tr class="ev-all"><td><span class="badge all">Allarme</span></td><td class="dur">72h</td><td class="num">142.8</td><td class="num thr">142</td><td class="num">101%</td><td class="ts">2001-09-17 10:10</td><td class="ts">2001-09-16 23:00</td><td class="ts">2001-09-18 02:10</td><td class="dur-cell">27h 20min</td></tr>
+<tr class="ev-pre"><td><span class="badge pre">Preallarme</span></td><td class="dur">72h</td><td class="num">142.8</td><td class="num thr">121</td><td class="num">118%</td><td class="ts">2001-09-17 10:10</td><td class="ts">2001-09-15 04:30</td><td class="ts">2001-09-18 02:40</td><td class="dur-cell">70h 20min</td></tr>
+<tr class="ev-att"><td><span class="badge att">Attenzione</span></td><td class="dur">72h</td><td class="num">142.8</td><td class="num thr">93</td><td class="num">154%</td><td class="ts">2001-09-17 10:10</td><td class="ts">2001-09-15 04:20</td><td class="ts">2001-09-18 02:50</td><td class="dur-cell">70h 40min</td></tr></tbody>
+  </table>
+  </div>
+</details>
+</section>
+
+</main>
+
+<footer>
+  Dati: Centro Funzionale Multirischi della Protezione Civile, Regione Campania.<br>
+  Stazione pluviometrica di Pozzuoli — lat 40.82981°N, lon 14.13547°E, quota 127 m s.l.m.<br>
+  Soglie: Piano di Protezione Civile – Centro Funzionale Regionale Campania.<br>
+  <a href="catalog.json">catalog.json</a> · <a href="index.html">Dashboard</a> · <a href="https://github.com/michelecalvello/iot">GitHub</a>
+</footer>
+
+</body>
+</html>

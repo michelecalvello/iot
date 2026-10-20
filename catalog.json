@@ -9,13 +9,34 @@
     "aggregation_labels": "Pioggia: ogni dato è riferito all'intervallo che termina al timestamp. Le serie di pioggia cumulata usano finestra mobile: il valore al tempo t è la somma dei mm caduti nelle N ore precedenti (intervallo (t-N h, t])."
   },
   "variables": {
-    "rain":    { "label_it": "Pioggia",              "unit": "mm" },
-    "rain_1h": { "label_it": "Pioggia cumulata 1 h", "unit": "mm" },
-    "rain_3h": { "label_it": "Pioggia cumulata 3 h", "unit": "mm" },
-    "rain_6h": { "label_it": "Pioggia cumulata 6 h", "unit": "mm" },
-    "rain_24h":{ "label_it": "Pioggia cumulata 24 h","unit": "mm" },
-    "rain_48h":{ "label_it": "Pioggia cumulata 48 h","unit": "mm" },
-    "rain_72h":{ "label_it": "Pioggia cumulata 72 h","unit": "mm" }
+    "rain": {
+      "label_it": "Pioggia",
+      "unit": "mm"
+    },
+    "rain_1h": {
+      "label_it": "Pioggia cumulata 1 h",
+      "unit": "mm"
+    },
+    "rain_3h": {
+      "label_it": "Pioggia cumulata 3 h",
+      "unit": "mm"
+    },
+    "rain_6h": {
+      "label_it": "Pioggia cumulata 6 h",
+      "unit": "mm"
+    },
+    "rain_24h": {
+      "label_it": "Pioggia cumulata 24 h",
+      "unit": "mm"
+    },
+    "rain_48h": {
+      "label_it": "Pioggia cumulata 48 h",
+      "unit": "mm"
+    },
+    "rain_72h": {
+      "label_it": "Pioggia cumulata 72 h",
+      "unit": "mm"
+    }
   },
   "stations": [
     {
@@ -56,13 +77,53 @@
         "Secondo massimo: 23.2 mm/10 min in data 09/09/2026."
       ],
       "sources": [
-        { "file": "2000.12.07_-_2015.12.31.csv", "sheet": "–", "column": "Valore" },
-        { "file": "2016.01.01_-_2026.10.19.csv", "sheet": "–", "column": "Valore" }
+        {
+          "file": "2000.12.07_-_2015.12.31.csv",
+          "sheet": "–",
+          "column": "Valore"
+        },
+        {
+          "file": "2016.01.01_-_2026.10.19.csv",
+          "sheet": "–",
+          "column": "Valore"
+        }
       ],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 0, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN_1d.csv"
@@ -93,14 +154,49 @@
         "flag 1 = copertura <90% della finestra (meno di 6 passi su 6): valore sottostimato. 351 dati segnalati su 1.358.053."
       ],
       "sources": [],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 351, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 351,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "derived_from": "PZZ_CF_RAIN",
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN1H/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN1H_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN1H_1d.csv"
+      },
+      "thresholds": {
+        "allarme": 52
       }
     },
     {
@@ -128,14 +224,51 @@
         "flag 1 = copertura <90% della finestra: valore sottostimato. 1.088 dati segnalati."
       ],
       "sources": [],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 1088, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 1088,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "derived_from": "PZZ_CF_RAIN",
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN3H/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN3H_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN3H_1d.csv"
+      },
+      "thresholds": {
+        "attenzione": 48,
+        "preallarme": 63,
+        "allarme": 74
       }
     },
     {
@@ -163,14 +296,51 @@
         "flag 1 = copertura <90% della finestra: valore sottostimato. 1.861 dati segnalati."
       ],
       "sources": [],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 1861, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 1861,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "derived_from": "PZZ_CF_RAIN",
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN6H/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN6H_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN6H_1d.csv"
+      },
+      "thresholds": {
+        "attenzione": 55,
+        "preallarme": 72,
+        "allarme": 84
       }
     },
     {
@@ -198,14 +368,51 @@
         "flag 1 = copertura <90% della finestra: valore sottostimato. 2.580 dati segnalati."
       ],
       "sources": [],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 2580, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 2580,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "derived_from": "PZZ_CF_RAIN",
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN24H/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN24H_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN24H_1d.csv"
+      },
+      "thresholds": {
+        "attenzione": 68,
+        "preallarme": 90,
+        "allarme": 105
       }
     },
     {
@@ -233,14 +440,51 @@
         "flag 1 = copertura <90% della finestra: valore sottostimato. 4.395 dati segnalati."
       ],
       "sources": [],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 4395, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 4395,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "derived_from": "PZZ_CF_RAIN",
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN48H/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN48H_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN48H_1d.csv"
+      },
+      "thresholds": {
+        "attenzione": 83,
+        "preallarme": 109,
+        "allarme": 128
       }
     },
     {
@@ -268,14 +512,51 @@
         "flag 1 = copertura <90% della finestra: valore sottostimato. 3.880 dati segnalati."
       ],
       "sources": [],
-      "qc_summary": { "n_total": 1358053, "n_suspect": 3880, "n_bad": 0 },
+      "qc_summary": {
+        "n_total": 1358053,
+        "n_suspect": 3880,
+        "n_bad": 0
+      },
       "gaps_over_24h": [],
       "derived_from": "PZZ_CF_RAIN",
       "data": {
-        "years": [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],
+        "years": [
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
         "raw": "data/raw/PZZ_CF_RAIN72H/{year}.csv",
         "agg_1h": "data/agg/PZZ_CF_RAIN72H_1h.csv",
         "agg_1d": "data/agg/PZZ_CF_RAIN72H_1d.csv"
+      },
+      "thresholds": {
+        "attenzione": 93,
+        "preallarme": 121,
+        "allarme": 142
       }
     }
   ]

@@ -6,6 +6,9 @@
   "use strict";
 
   // ---------------------------------------------------------------- costanti
+  const THR_COLOR = { attenzione: "#f59e0b", preallarme: "#f97316", allarme: "#ef4444" };
+  const THR_LABEL = { attenzione: "Att.", preallarme: "Pre.", allarme: "All." };
+  const THR_ORDER = ["attenzione", "preallarme", "allarme"];
   const MAX_SERIES = 20;
   const DAY = 86400000;
   const VAR_ORDER = ["rain", "rain_1h", "rain_3h", "rain_6h", "rain_24h", "rain_48h", "rain_72h", "rain_cum", "stage", "vwc", "sm", "psi", "t_soil"];
@@ -264,6 +267,7 @@
       },
     };
     const axisOf = {};
+    layout.shapes = layout.shapes || [];
 
     if (state.mode === "panels") {
       const gap = 0.035;
@@ -290,6 +294,45 @@
         };
         // pannelli di pioggia separati: stessa scala, per un confronto corretto
         if (g === "rain") { if (firstRain) layout[key].matches = firstRain; else firstRain = id; }
+
+        // ---- linee soglia (solo pannelli, solo serie cumulate) ----
+        if (RAIN_CUM_VARS.has(g)) {
+          // raccogli le soglie di tutte le serie selezionate in questo pannello
+          const thrMaps = grp.sids
+            .map((sid) => seriesById[sid].thresholds)
+            .filter(Boolean);
+          if (thrMaps.length) {
+            // usa le soglie del primo sid (stessa durata → stesse soglie)
+            const thr = thrMaps[0];
+            // linee già usate (per evitare duplicati se più serie hanno stesse soglie)
+            const seen = new Set();
+            for (const lv of THR_ORDER) {
+              if (!(lv in thr)) continue;
+              const val = thr[lv];
+              const vkey = `${lv}:${val}`;
+              if (seen.has(vkey)) continue;
+              seen.add(vkey);
+              const col = THR_COLOR[lv];
+              layout.shapes.push({
+                type: "line", xref: "paper", yref: id,
+                x0: 0, x1: 1, y0: val, y1: val,
+                line: { color: col, width: 1.5, dash: "dot" },
+                layer: "below",
+              });
+              layout.annotations.push({
+                xref: "paper", yref: id,
+                x: 1, y: val, xanchor: "left", yanchor: "middle",
+                text: `<b>${THR_LABEL[lv]}</b> ${val}`,
+                showarrow: false,
+                font: { size: 10, color: col },
+                bgcolor: css("--surface"),
+                borderpad: 1,
+                opacity: 0.85,
+              });
+            }
+          }
+        }
+
         top -= h + gap;
       });
       layout.xaxis.anchor = groups.length > 1 ? `y${groups.length}` : "y";

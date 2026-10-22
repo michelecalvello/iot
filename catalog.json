@@ -1,6 +1,6 @@
 {
   "catalog_version": "0.6",
-  "generated": "2026-10-22T11:40:42+01:00",
+  "generated": "2026-10-22T13:00:07+01:00",
   "conventions": {
     "time_reference": "UTC+1 (ora solare italiana / CET, senza ora legale) per tutte le misure. Timestamp in ISO 8601 con offset '+01:00'.",
     "series_id": "<STAZIONE>_<GRANDEZZA>",
@@ -48,7 +48,56 @@
       "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania",
       "external_code": "CF Campania",
       "notes": "Stazione pluviometrica della rete del Centro Funzionale Campania. Dati a 10 minuti.",
-      "order": 1
+      "order": 1,
+      "network": "CF"
+    },
+    {
+      "station_id": "CMP080_MNW",
+      "name": "Napoli cmp080 (mnw)",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "elevation_m": 215,
+      "owner": "Rete mnw, via MeteoHub (Agenzia ItaliaMeteo) – gestore da verificare",
+      "external_code": "cmp080",
+      "notes": "Pluviometro della rete mnw (non Centro Funzionale). Dati orari (2026). Quota dai metadati BUFR.",
+      "order": 6,
+      "network": "mnw"
+    },
+    {
+      "station_id": "CMP292_MNW",
+      "name": "Napoli cmp292 (mnw)",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "elevation_m": 50,
+      "owner": "Rete mnw, via MeteoHub (Agenzia ItaliaMeteo) – gestore da verificare",
+      "external_code": "cmp292",
+      "notes": "Pluviometro della rete mnw (non Centro Funzionale). Dati orari (2026). Quota dai metadati BUFR.",
+      "order": 7,
+      "network": "mnw"
+    },
+    {
+      "station_id": "CMP304_MNW",
+      "name": "Napoli cmp304 (mnw)",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "elevation_m": 82,
+      "owner": "Rete mnw, via MeteoHub (Agenzia ItaliaMeteo) – gestore da verificare",
+      "external_code": "cmp304",
+      "notes": "Pluviometro della rete mnw (non Centro Funzionale). Dati orari (2026). Quota dai metadati BUFR.",
+      "order": 8,
+      "network": "mnw"
+    },
+    {
+      "station_id": "CMP307_MNW",
+      "name": "Napoli cmp307 (mnw)",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "elevation_m": 90,
+      "owner": "Rete mnw, via MeteoHub (Agenzia ItaliaMeteo) – gestore da verificare",
+      "external_code": "cmp307",
+      "notes": "Pluviometro della rete mnw (non Centro Funzionale). Dati orari (2026). Quota dai metadati BUFR.",
+      "order": 9,
+      "network": "mnw"
     },
     {
       "station_id": "CAM_CF",
@@ -59,7 +108,8 @@
       "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
       "external_code": "Napoli Camaldoli",
       "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto e a 10 minuti (2026).",
-      "order": 2
+      "order": 2,
+      "network": "CF"
     },
     {
       "station_id": "CAP_CF",
@@ -70,7 +120,8 @@
       "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
       "external_code": "Napoli Capodimonte",
       "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto e a 10 minuti (2026).",
-      "order": 3
+      "order": 3,
+      "network": "CF"
     },
     {
       "station_id": "NIS_CF",
@@ -81,7 +132,8 @@
       "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
       "external_code": "Nisida METEO",
       "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto e a 10 minuti (2026).",
-      "order": 4
+      "order": 4,
+      "network": "CF"
     },
     {
       "station_id": "LPA_CF",
@@ -92,7 +144,8 @@
       "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
       "external_code": "Lago Patria METEO",
       "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto e a 10 minuti (2026).",
-      "order": 5
+      "order": 5,
+      "network": "CF"
     }
   ],
   "series": [
@@ -603,6 +656,1358 @@
         "attenzione": 93,
         "preallarme": 121,
         "allarme": 142
+      }
+    },
+    {
+      "series_id": "CMP080_MNW_RAIN",
+      "variable": "rain",
+      "label": "Pioggia 1 h – Napoli cmp080 (mnw)",
+      "aggregation": "sum",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 6880,
+      "min": 0.0,
+      "max": 16.8,
+      "station_id": "CMP080_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia 1 h",
+      "qc_notes": [
+        "Dati orari rete mnw, scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nell'ora che termina a t. Risoluzione 0,1 mm.",
+        "Totale registrato: 512.2 mm (01/01/2026 – 22/10/2026).",
+        "Ore mancanti: 177 su 7.057 (3%); non interpolate."
+      ],
+      "sources": [
+        {
+          "file": "660567e4-data-20261022T115130Z-b1550d36-d53b-4a8c-a644-490d2462ed22.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 6880,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-07-24T09:00+01:00",
+          "to": "2026-07-28T22:00+01:00"
+        },
+        {
+          "from": "2026-08-18T00:00+01:00",
+          "to": "2026-08-19T22:00+01:00"
+        }
+      ],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP080_MNW_RAIN/{year}.csv",
+        "agg_1h": "data/agg/CMP080_MNW_RAIN_1h.csv",
+        "agg_1d": "data/agg/CMP080_MNW_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP080_MNW_RAIN3H",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Napoli cmp080 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 6880,
+      "min": 0.0,
+      "max": 30.8,
+      "station_id": "CMP080_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP080_MNW_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]).",
+        "Massimo 3 h: 30.8 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 12 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 6880,
+        "n_suspect": 12,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-07-24T09:00+01:00",
+          "to": "2026-07-28T22:00+01:00"
+        },
+        {
+          "from": "2026-08-18T00:00+01:00",
+          "to": "2026-08-19T22:00+01:00"
+        }
+      ],
+      "derived_from": "CMP080_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP080_MNW_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/CMP080_MNW_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/CMP080_MNW_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP080_MNW_RAIN6H",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Napoli cmp080 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 6880,
+      "min": 0.0,
+      "max": 49.4,
+      "station_id": "CMP080_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP080_MNW_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]).",
+        "Massimo 6 h: 49.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 30 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 6880,
+        "n_suspect": 30,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-07-24T09:00+01:00",
+          "to": "2026-07-28T22:00+01:00"
+        },
+        {
+          "from": "2026-08-18T00:00+01:00",
+          "to": "2026-08-19T22:00+01:00"
+        }
+      ],
+      "derived_from": "CMP080_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP080_MNW_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/CMP080_MNW_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/CMP080_MNW_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP080_MNW_RAIN24H",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Napoli cmp080 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 6880,
+      "min": 0.0,
+      "max": 63.6,
+      "station_id": "CMP080_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP080_MNW_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]).",
+        "Massimo 24 h: 63.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 105 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 6880,
+        "n_suspect": 105,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-07-24T09:00+01:00",
+          "to": "2026-07-28T22:00+01:00"
+        },
+        {
+          "from": "2026-08-18T00:00+01:00",
+          "to": "2026-08-19T22:00+01:00"
+        }
+      ],
+      "derived_from": "CMP080_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP080_MNW_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/CMP080_MNW_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/CMP080_MNW_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP080_MNW_RAIN48H",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Napoli cmp080 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 6880,
+      "min": 0.0,
+      "max": 84.0,
+      "station_id": "CMP080_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP080_MNW_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]).",
+        "Massimo 48 h: 84.0 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 172 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 6880,
+        "n_suspect": 172,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-07-24T09:00+01:00",
+          "to": "2026-07-28T22:00+01:00"
+        },
+        {
+          "from": "2026-08-18T00:00+01:00",
+          "to": "2026-08-19T22:00+01:00"
+        }
+      ],
+      "derived_from": "CMP080_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP080_MNW_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/CMP080_MNW_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/CMP080_MNW_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP080_MNW_RAIN72H",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Napoli cmp080 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 6880,
+      "min": 0.0,
+      "max": 102.4,
+      "station_id": "CMP080_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.84106,
+      "lon": 14.22908,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP080_MNW_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]).",
+        "Massimo 72 h: 102.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 256 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 6880,
+        "n_suspect": 256,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-07-24T09:00+01:00",
+          "to": "2026-07-28T22:00+01:00"
+        },
+        {
+          "from": "2026-08-18T00:00+01:00",
+          "to": "2026-08-19T22:00+01:00"
+        }
+      ],
+      "derived_from": "CMP080_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP080_MNW_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/CMP080_MNW_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/CMP080_MNW_RAIN72H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP292_MNW_RAIN",
+      "variable": "rain",
+      "label": "Pioggia 1 h – Napoli cmp292 (mnw)",
+      "aggregation": "sum",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-21T23:00+01:00",
+      "n_values": 4954,
+      "min": 0.0,
+      "max": 16.6,
+      "station_id": "CMP292_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia 1 h",
+      "qc_notes": [
+        "Dati orari rete mnw, scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nell'ora che termina a t. Risoluzione 0,1 mm.",
+        "Totale registrato: 411.6 mm (01/01/2026 – 21/10/2026).",
+        "Ore mancanti: 2.101 su 7.055 (30%); non interpolate."
+      ],
+      "sources": [
+        {
+          "file": "660567e4-data-20261022T115130Z-b1550d36-d53b-4a8c-a644-490d2462ed22.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 4954,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-08-18T06:00+01:00",
+          "to": "2026-08-19T07:00+01:00"
+        },
+        {
+          "from": "2026-09-24T01:00+01:00",
+          "to": "2026-09-28T11:00+01:00"
+        },
+        {
+          "from": "2026-09-28T13:00+01:00",
+          "to": "2026-09-30T04:00+01:00"
+        },
+        {
+          "from": "2026-09-30T06:00+01:00",
+          "to": "2026-10-01T08:00+01:00"
+        }
+      ],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP292_MNW_RAIN/{year}.csv",
+        "agg_1h": "data/agg/CMP292_MNW_RAIN_1h.csv",
+        "agg_1d": "data/agg/CMP292_MNW_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP292_MNW_RAIN3H",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Napoli cmp292 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-21T23:00+01:00",
+      "n_values": 4954,
+      "min": 0.0,
+      "max": 20.2,
+      "station_id": "CMP292_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP292_MNW_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]).",
+        "Massimo 3 h: 20.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 561 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 4954,
+        "n_suspect": 561,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-08-18T06:00+01:00",
+          "to": "2026-08-19T07:00+01:00"
+        },
+        {
+          "from": "2026-09-24T01:00+01:00",
+          "to": "2026-09-28T11:00+01:00"
+        },
+        {
+          "from": "2026-09-28T13:00+01:00",
+          "to": "2026-09-30T04:00+01:00"
+        },
+        {
+          "from": "2026-09-30T06:00+01:00",
+          "to": "2026-10-01T08:00+01:00"
+        }
+      ],
+      "derived_from": "CMP292_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP292_MNW_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/CMP292_MNW_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/CMP292_MNW_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP292_MNW_RAIN6H",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Napoli cmp292 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-21T23:00+01:00",
+      "n_values": 4954,
+      "min": 0.0,
+      "max": 26.4,
+      "station_id": "CMP292_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP292_MNW_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]).",
+        "Massimo 6 h: 26.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 860 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 4954,
+        "n_suspect": 860,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-08-18T06:00+01:00",
+          "to": "2026-08-19T07:00+01:00"
+        },
+        {
+          "from": "2026-09-24T01:00+01:00",
+          "to": "2026-09-28T11:00+01:00"
+        },
+        {
+          "from": "2026-09-28T13:00+01:00",
+          "to": "2026-09-30T04:00+01:00"
+        },
+        {
+          "from": "2026-09-30T06:00+01:00",
+          "to": "2026-10-01T08:00+01:00"
+        }
+      ],
+      "derived_from": "CMP292_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP292_MNW_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/CMP292_MNW_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/CMP292_MNW_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP292_MNW_RAIN24H",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Napoli cmp292 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-21T23:00+01:00",
+      "n_values": 4954,
+      "min": 0.0,
+      "max": 35.2,
+      "station_id": "CMP292_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP292_MNW_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]).",
+        "Massimo 24 h: 35.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.113 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 4954,
+        "n_suspect": 1113,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-08-18T06:00+01:00",
+          "to": "2026-08-19T07:00+01:00"
+        },
+        {
+          "from": "2026-09-24T01:00+01:00",
+          "to": "2026-09-28T11:00+01:00"
+        },
+        {
+          "from": "2026-09-28T13:00+01:00",
+          "to": "2026-09-30T04:00+01:00"
+        },
+        {
+          "from": "2026-09-30T06:00+01:00",
+          "to": "2026-10-01T08:00+01:00"
+        }
+      ],
+      "derived_from": "CMP292_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP292_MNW_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/CMP292_MNW_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/CMP292_MNW_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP292_MNW_RAIN48H",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Napoli cmp292 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-21T23:00+01:00",
+      "n_values": 4954,
+      "min": 0.0,
+      "max": 49.2,
+      "station_id": "CMP292_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP292_MNW_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]).",
+        "Massimo 48 h: 49.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.161 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 4954,
+        "n_suspect": 1161,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-08-18T06:00+01:00",
+          "to": "2026-08-19T07:00+01:00"
+        },
+        {
+          "from": "2026-09-24T01:00+01:00",
+          "to": "2026-09-28T11:00+01:00"
+        },
+        {
+          "from": "2026-09-28T13:00+01:00",
+          "to": "2026-09-30T04:00+01:00"
+        },
+        {
+          "from": "2026-09-30T06:00+01:00",
+          "to": "2026-10-01T08:00+01:00"
+        }
+      ],
+      "derived_from": "CMP292_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP292_MNW_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/CMP292_MNW_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/CMP292_MNW_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP292_MNW_RAIN72H",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Napoli cmp292 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-21T23:00+01:00",
+      "n_values": 4954,
+      "min": 0.0,
+      "max": 60.6,
+      "station_id": "CMP292_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.83625,
+      "lon": 14.23712,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP292_MNW_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]).",
+        "Massimo 72 h: 60.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.120 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 4954,
+        "n_suspect": 1120,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-08-18T06:00+01:00",
+          "to": "2026-08-19T07:00+01:00"
+        },
+        {
+          "from": "2026-09-24T01:00+01:00",
+          "to": "2026-09-28T11:00+01:00"
+        },
+        {
+          "from": "2026-09-28T13:00+01:00",
+          "to": "2026-09-30T04:00+01:00"
+        },
+        {
+          "from": "2026-09-30T06:00+01:00",
+          "to": "2026-10-01T08:00+01:00"
+        }
+      ],
+      "derived_from": "CMP292_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP292_MNW_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/CMP292_MNW_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/CMP292_MNW_RAIN72H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP304_MNW_RAIN",
+      "variable": "rain",
+      "label": "Pioggia 1 h – Napoli cmp304 (mnw)",
+      "aggregation": "sum",
+      "step_min": 60,
+      "start": "2026-01-01T06:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5564,
+      "min": 0.0,
+      "max": 19.7,
+      "station_id": "CMP304_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia 1 h",
+      "qc_notes": [
+        "Dati orari rete mnw, scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nell'ora che termina a t. Risoluzione 0,1 mm.",
+        "Totale registrato: 405.2 mm (01/01/2026 – 22/10/2026).",
+        "Ore mancanti: 1.488 su 7.052 (21%); non interpolate."
+      ],
+      "sources": [
+        {
+          "file": "660567e4-data-20261022T115130Z-b1550d36-d53b-4a8c-a644-490d2462ed22.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 5564,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-01-11T18:00+01:00",
+          "to": "2026-01-13T17:00+01:00"
+        },
+        {
+          "from": "2026-01-15T20:00+01:00",
+          "to": "2026-01-17T17:00+01:00"
+        },
+        {
+          "from": "2026-03-26T06:00+01:00",
+          "to": "2026-03-27T12:00+01:00"
+        },
+        {
+          "from": "2026-04-05T21:00+01:00",
+          "to": "2026-04-07T23:00+01:00"
+        },
+        {
+          "from": "2026-09-18T04:00+01:00",
+          "to": "2026-09-19T11:00+01:00"
+        },
+        {
+          "from": "2026-10-03T09:00+01:00",
+          "to": "2026-10-04T16:00+01:00"
+        }
+      ],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP304_MNW_RAIN/{year}.csv",
+        "agg_1h": "data/agg/CMP304_MNW_RAIN_1h.csv",
+        "agg_1d": "data/agg/CMP304_MNW_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP304_MNW_RAIN3H",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Napoli cmp304 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T06:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5564,
+      "min": 0.0,
+      "max": 25.7,
+      "station_id": "CMP304_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP304_MNW_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]).",
+        "Massimo 3 h: 25.7 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 572 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5564,
+        "n_suspect": 572,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-01-11T18:00+01:00",
+          "to": "2026-01-13T17:00+01:00"
+        },
+        {
+          "from": "2026-01-15T20:00+01:00",
+          "to": "2026-01-17T17:00+01:00"
+        },
+        {
+          "from": "2026-03-26T06:00+01:00",
+          "to": "2026-03-27T12:00+01:00"
+        },
+        {
+          "from": "2026-04-05T21:00+01:00",
+          "to": "2026-04-07T23:00+01:00"
+        },
+        {
+          "from": "2026-09-18T04:00+01:00",
+          "to": "2026-09-19T11:00+01:00"
+        },
+        {
+          "from": "2026-10-03T09:00+01:00",
+          "to": "2026-10-04T16:00+01:00"
+        }
+      ],
+      "derived_from": "CMP304_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP304_MNW_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/CMP304_MNW_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/CMP304_MNW_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP304_MNW_RAIN6H",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Napoli cmp304 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T06:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5564,
+      "min": 0.0,
+      "max": 25.8,
+      "station_id": "CMP304_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP304_MNW_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]).",
+        "Massimo 6 h: 25.8 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.163 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5564,
+        "n_suspect": 1163,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-01-11T18:00+01:00",
+          "to": "2026-01-13T17:00+01:00"
+        },
+        {
+          "from": "2026-01-15T20:00+01:00",
+          "to": "2026-01-17T17:00+01:00"
+        },
+        {
+          "from": "2026-03-26T06:00+01:00",
+          "to": "2026-03-27T12:00+01:00"
+        },
+        {
+          "from": "2026-04-05T21:00+01:00",
+          "to": "2026-04-07T23:00+01:00"
+        },
+        {
+          "from": "2026-09-18T04:00+01:00",
+          "to": "2026-09-19T11:00+01:00"
+        },
+        {
+          "from": "2026-10-03T09:00+01:00",
+          "to": "2026-10-04T16:00+01:00"
+        }
+      ],
+      "derived_from": "CMP304_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP304_MNW_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/CMP304_MNW_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/CMP304_MNW_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP304_MNW_RAIN24H",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Napoli cmp304 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T06:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5564,
+      "min": 0.0,
+      "max": 28.1,
+      "station_id": "CMP304_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP304_MNW_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]).",
+        "Massimo 24 h: 28.1 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 2.060 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5564,
+        "n_suspect": 2060,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-01-11T18:00+01:00",
+          "to": "2026-01-13T17:00+01:00"
+        },
+        {
+          "from": "2026-01-15T20:00+01:00",
+          "to": "2026-01-17T17:00+01:00"
+        },
+        {
+          "from": "2026-03-26T06:00+01:00",
+          "to": "2026-03-27T12:00+01:00"
+        },
+        {
+          "from": "2026-04-05T21:00+01:00",
+          "to": "2026-04-07T23:00+01:00"
+        },
+        {
+          "from": "2026-09-18T04:00+01:00",
+          "to": "2026-09-19T11:00+01:00"
+        },
+        {
+          "from": "2026-10-03T09:00+01:00",
+          "to": "2026-10-04T16:00+01:00"
+        }
+      ],
+      "derived_from": "CMP304_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP304_MNW_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/CMP304_MNW_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/CMP304_MNW_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP304_MNW_RAIN48H",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Napoli cmp304 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T06:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5564,
+      "min": 0.0,
+      "max": 43.2,
+      "station_id": "CMP304_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP304_MNW_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]).",
+        "Massimo 48 h: 43.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 2.826 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5564,
+        "n_suspect": 2826,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-01-11T18:00+01:00",
+          "to": "2026-01-13T17:00+01:00"
+        },
+        {
+          "from": "2026-01-15T20:00+01:00",
+          "to": "2026-01-17T17:00+01:00"
+        },
+        {
+          "from": "2026-03-26T06:00+01:00",
+          "to": "2026-03-27T12:00+01:00"
+        },
+        {
+          "from": "2026-04-05T21:00+01:00",
+          "to": "2026-04-07T23:00+01:00"
+        },
+        {
+          "from": "2026-09-18T04:00+01:00",
+          "to": "2026-09-19T11:00+01:00"
+        },
+        {
+          "from": "2026-10-03T09:00+01:00",
+          "to": "2026-10-04T16:00+01:00"
+        }
+      ],
+      "derived_from": "CMP304_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP304_MNW_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/CMP304_MNW_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/CMP304_MNW_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP304_MNW_RAIN72H",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Napoli cmp304 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T06:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5564,
+      "min": 0.0,
+      "max": 63.6,
+      "station_id": "CMP304_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80154,
+      "lon": 14.19384,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP304_MNW_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]).",
+        "Massimo 72 h: 63.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 3.017 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5564,
+        "n_suspect": 3017,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-01-11T18:00+01:00",
+          "to": "2026-01-13T17:00+01:00"
+        },
+        {
+          "from": "2026-01-15T20:00+01:00",
+          "to": "2026-01-17T17:00+01:00"
+        },
+        {
+          "from": "2026-03-26T06:00+01:00",
+          "to": "2026-03-27T12:00+01:00"
+        },
+        {
+          "from": "2026-04-05T21:00+01:00",
+          "to": "2026-04-07T23:00+01:00"
+        },
+        {
+          "from": "2026-09-18T04:00+01:00",
+          "to": "2026-09-19T11:00+01:00"
+        },
+        {
+          "from": "2026-10-03T09:00+01:00",
+          "to": "2026-10-04T16:00+01:00"
+        }
+      ],
+      "derived_from": "CMP304_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP304_MNW_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/CMP304_MNW_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/CMP304_MNW_RAIN72H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP307_MNW_RAIN",
+      "variable": "rain",
+      "label": "Pioggia 1 h – Napoli cmp307 (mnw)",
+      "aggregation": "sum",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5272,
+      "min": 0.0,
+      "max": 35.4,
+      "station_id": "CMP307_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia 1 h",
+      "qc_notes": [
+        "Dati orari rete mnw, scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nell'ora che termina a t. Risoluzione 0,1 mm.",
+        "Totale registrato: 517.2 mm (01/01/2026 – 22/10/2026).",
+        "Ore mancanti: 1.785 su 7.057 (25%); non interpolate."
+      ],
+      "sources": [
+        {
+          "file": "660567e4-data-20261022T115130Z-b1550d36-d53b-4a8c-a644-490d2462ed22.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 5272,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-03-05T21:00+01:00",
+          "to": "2026-03-09T10:00+01:00"
+        },
+        {
+          "from": "2026-08-04T03:00+01:00",
+          "to": "2026-08-05T13:00+01:00"
+        }
+      ],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP307_MNW_RAIN/{year}.csv",
+        "agg_1h": "data/agg/CMP307_MNW_RAIN_1h.csv",
+        "agg_1d": "data/agg/CMP307_MNW_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP307_MNW_RAIN3H",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Napoli cmp307 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5272,
+      "min": 0.0,
+      "max": 39.4,
+      "station_id": "CMP307_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP307_MNW_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]).",
+        "Massimo 3 h: 39.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 692 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5272,
+        "n_suspect": 692,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-03-05T21:00+01:00",
+          "to": "2026-03-09T10:00+01:00"
+        },
+        {
+          "from": "2026-08-04T03:00+01:00",
+          "to": "2026-08-05T13:00+01:00"
+        }
+      ],
+      "derived_from": "CMP307_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP307_MNW_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/CMP307_MNW_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/CMP307_MNW_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP307_MNW_RAIN6H",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Napoli cmp307 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5272,
+      "min": 0.0,
+      "max": 39.4,
+      "station_id": "CMP307_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP307_MNW_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]).",
+        "Massimo 6 h: 39.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.193 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5272,
+        "n_suspect": 1193,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-03-05T21:00+01:00",
+          "to": "2026-03-09T10:00+01:00"
+        },
+        {
+          "from": "2026-08-04T03:00+01:00",
+          "to": "2026-08-05T13:00+01:00"
+        }
+      ],
+      "derived_from": "CMP307_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP307_MNW_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/CMP307_MNW_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/CMP307_MNW_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP307_MNW_RAIN24H",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Napoli cmp307 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5272,
+      "min": 0.0,
+      "max": 48.2,
+      "station_id": "CMP307_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP307_MNW_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]).",
+        "Massimo 24 h: 48.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.654 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5272,
+        "n_suspect": 1654,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-03-05T21:00+01:00",
+          "to": "2026-03-09T10:00+01:00"
+        },
+        {
+          "from": "2026-08-04T03:00+01:00",
+          "to": "2026-08-05T13:00+01:00"
+        }
+      ],
+      "derived_from": "CMP307_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP307_MNW_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/CMP307_MNW_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/CMP307_MNW_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP307_MNW_RAIN48H",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Napoli cmp307 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5272,
+      "min": 0.0,
+      "max": 69.0,
+      "station_id": "CMP307_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP307_MNW_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]).",
+        "Massimo 48 h: 69.0 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.821 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5272,
+        "n_suspect": 1821,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-03-05T21:00+01:00",
+          "to": "2026-03-09T10:00+01:00"
+        },
+        {
+          "from": "2026-08-04T03:00+01:00",
+          "to": "2026-08-05T13:00+01:00"
+        }
+      ],
+      "derived_from": "CMP307_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP307_MNW_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/CMP307_MNW_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/CMP307_MNW_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CMP307_MNW_RAIN72H",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Napoli cmp307 (mnw)",
+      "aggregation": "last",
+      "step_min": 60,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 5272,
+      "min": 0.0,
+      "max": 90.8,
+      "station_id": "CMP307_MNW",
+      "unit": "mm",
+      "status": "active",
+      "lat": 40.80382,
+      "lon": 14.20069,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CMP307_MNW_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]).",
+        "Massimo 72 h: 90.8 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.713 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 5272,
+        "n_suspect": 1713,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [
+        {
+          "from": "2026-03-05T21:00+01:00",
+          "to": "2026-03-09T10:00+01:00"
+        },
+        {
+          "from": "2026-08-04T03:00+01:00",
+          "to": "2026-08-05T13:00+01:00"
+        }
+      ],
+      "derived_from": "CMP307_MNW_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CMP307_MNW_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/CMP307_MNW_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/CMP307_MNW_RAIN72H_1d.csv"
       }
     },
     {

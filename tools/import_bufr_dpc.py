@@ -54,7 +54,7 @@ def bits(a: np.ndarray, pos: int, width: int) -> np.ndarray:
     return ((w >> np.uint64(40 - sh - width)) & np.uint64((1 << width) - 1)).astype(np.int64)
 
 
-def decode(path: Path) -> pd.DataFrame:
+def decode(path: Path, network: bytes = b"dpcn-campania   ") -> pd.DataFrame:
     buf = np.fromfile(path, dtype=np.uint8)
     if len(buf) % MSG_LEN:
         sys.exit(f"Dimensione file non multipla di {MSG_LEN} byte: i messaggi non hanno lunghezza fissa")
@@ -69,7 +69,7 @@ def decode(path: Path) -> pd.DataFrame:
         sys.exit(f"Descrittori inattesi: {desc}")
     s4 = s3 + s3len
     d = np.pad(m[:, s4 + 4:-4], ((0, 0), (0, 8)))   # padding per le letture a 5 byte in fondo
-    assert (d[:, :16] == d[0, :16]).all() and bytes(d[0, :16]) == b"dpcn-campania   ", "rete inattesa"
+    assert (d[:, :16] == d[0, :16]).all() and bytes(d[0, :16]) == network, f"rete inattesa: {bytes(d[0, :16])}"
     f = {k: bits(d, *v) for k, v in LAYOUT.items() if k not in ("network", "name")}
     name = np.stack([bits(d, LAYOUT["name"][0] + 8 * j, 8) for j in range(32)], axis=1).astype(np.uint8)
     names = np.array([bytes(r).decode("ascii").strip() for r in np.unique(name, axis=0)])
@@ -229,8 +229,11 @@ def main():
     cat["stations"] += new_stations
     cat["series"] += new_series
     for st in cat["stations"]:
-        cfg = next(c for c in STATIONS.values() if c["id"] == st["station_id"])
+        cfg = next((c for c in STATIONS.values() if c["id"] == st["station_id"]), None)
+        if cfg is None:                          # stazioni di altre reti (es. mnw): gestite da altri script
+            continue
         st["order"] = cfg["order"]              # ordine nell'elenco del portale
+        st["network"] = "CF"
         if cfg.get("existing"):
             st["name"] = f"{cfg['short']} – CF"
     for se in cat["series"]:

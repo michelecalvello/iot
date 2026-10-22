@@ -512,7 +512,7 @@
   }
 
   // ---------------------------------------------------------------- stazioni
-  const isCF = (st) => /^CF_/.test(st.station_id);
+  const isCF = (st) => st.network === "CF" || /^CF_/.test(st.station_id);
   const elevLabel = (st) => st.elevation_m != null ? `${st.elevation_m} m s.l.m.` : "quota n.d.";
   // ordine: campo "order" del catalogo (se presente), poi stazioni UNISA, poi rete CF per quota crescente
   const stationOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99) || (isCF(a) - isCF(b)) || ((a.elevation_m ?? 0) - (b.elevation_m ?? 0));
@@ -602,7 +602,7 @@
       const spread = grp.length > 1;
       const m = L.circleMarker([s.lat, s.lon], {
         radius: isCF(s) ? 7 : 8, weight: 2, color: "#ffffff",
-        fillColor: isCF(s) ? css("--s2") : css("--s1"), fillOpacity: 1,
+        fillColor: isCF(s) ? css("--s2") : s.network === "mnw" ? css("--s3") : css("--s1"), fillOpacity: 1,
       }).addTo(map);
       m.bindTooltip(`<b>${s.name}</b><br>${elevLabel(s)}${spread ? "<br>posizione indicativa (stesse coordinate di " + grp.length + " stazioni)" : ""}<br><span style="opacity:.75">clic per filtrare le serie</span>`);
       m.on("click", () => { state.fStation = s.station_id; $("fStation").value = s.station_id; renderSeriesList(); });

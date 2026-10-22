@@ -114,8 +114,10 @@
   function currentRes() {
     const span = (tms(state.to) - tms(state.from)) / DAY;
     if (state.res === "auto") return { res: AUTO_RES(span), note: "" };
-    if (state.res === "raw" && span > RAW_MAX_DAYS)
-      return { res: "1h", note: `Dato originale disponibile per intervalli fino a ${RAW_MAX_DAYS} giorni: uso la risoluzione oraria.` };
+    // le serie al minuto (raw_max_days nel catalogo) hanno un limite più stretto di quelle a 10 min
+    const rawMax = Math.min(RAW_MAX_DAYS, ...state.selected.map((id) => seriesById[id]?.raw_max_days ?? Infinity));
+    if (state.res === "raw" && span > rawMax)
+      return { res: "1h", note: `Dato originale disponibile per intervalli fino a ${rawMax} giorni: uso la risoluzione oraria.` };
     return { res: state.res, note: "" };
   }
 
@@ -137,7 +139,7 @@
   function shortLabel(s) {
     const st = stationById[s.station_id];
     const d = s.depth_m != null ? ` ${Math.round(s.depth_m * 100)} cm` : "";
-    return `${SHORT[s.variable]}${d} · ${st.name.replace(/^Amalfi\s*–\s*/, "")}`;
+    return `${s.short_label || SHORT[s.variable]}${d} · ${st.name.replace(/^Amalfi\s*–\s*/, "")}`;
   }
   const fmtNum = (x, variable) => x == null || !isFinite(x) ? "–"
     : variable === "vwc" ? x.toFixed(3) : Math.abs(x) >= 100 ? x.toFixed(0) : x.toFixed(1);
@@ -535,7 +537,7 @@
           return `<div class="s-item" title="${s.label}">
             <label><input type="checkbox" data-sid="${s.series_id}" ${on ? "checked" : ""}>
               <span class="swatch" style="background:${on ? colorOf(s.series_id) : "transparent"}"></span>
-              <span class="name">${SHORT[s.variable]}${d}</span></label>
+              <span class="name">${s.short_label || SHORT[s.variable]}${d}</span></label>
             <button class="info-btn" type="button" data-info="${s.series_id}" title="Metadati">ⓘ</button></div>`;
         }).join("")}</div>`).join("") || '<p class="muted small">Nessuna serie con questi filtri.</p>';
   }

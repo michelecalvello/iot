@@ -1,6 +1,6 @@
 {
-  "catalog_version": "0.5",
-  "generated": "2026-10-20T22:40:00+01:00",
+  "catalog_version": "0.6",
+  "generated": "2026-10-22T11:00:55+01:00",
   "conventions": {
     "time_reference": "UTC+1 (ora solare italiana / CET, senza ora legale) per tutte le misure. Timestamp in ISO 8601 con offset '+01:00'.",
     "series_id": "<STAZIONE>_<GRANDEZZA>",
@@ -48,6 +48,46 @@
       "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania",
       "external_code": "CF Campania",
       "notes": "Stazione pluviometrica della rete del Centro Funzionale Campania. Dati a 10 minuti."
+    },
+    {
+      "station_id": "NIS_CF",
+      "name": "Nisida – Centro Funzionale Campania",
+      "lat": 40.79361,
+      "lon": 14.16389,
+      "elevation_m": 88,
+      "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
+      "external_code": "Nisida METEO",
+      "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto (2026). Quota dai metadati BUFR, da verificare."
+    },
+    {
+      "station_id": "LPA_CF",
+      "name": "Lago Patria – Centro Funzionale Campania",
+      "lat": 40.94111,
+      "lon": 14.02139,
+      "elevation_m": 1,
+      "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
+      "external_code": "Lago Patria METEO",
+      "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto (2026). Quota dai metadati BUFR, da verificare."
+    },
+    {
+      "station_id": "CAM_CF",
+      "name": "Napoli Camaldoli – Centro Funzionale Campania",
+      "lat": 40.85528,
+      "lon": 14.1975,
+      "elevation_m": 122,
+      "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
+      "external_code": "Napoli Camaldoli",
+      "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto (2026). Quota dai metadati BUFR, da verificare."
+    },
+    {
+      "station_id": "CAP_CF",
+      "name": "Napoli Capodimonte – Centro Funzionale Campania",
+      "lat": 40.86556,
+      "lon": 14.23417,
+      "elevation_m": 188,
+      "owner": "Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
+      "external_code": "Napoli Capodimonte",
+      "notes": "Stazione pluviometrica della rete dpcn-campania. Dati al minuto (2026). Quota dai metadati BUFR, da verificare."
     }
   ],
   "series": [
@@ -557,6 +597,1184 @@
         "attenzione": 93,
         "preallarme": 121,
         "allarme": 142
+      }
+    },
+    {
+      "series_id": "PZZ_CF_RAIN1MIN",
+      "station_id": "PZZ_CF",
+      "variable": "rain",
+      "label": "Pioggia 1 min – Pozzuoli (CF)",
+      "unit": "mm",
+      "aggregation": "sum",
+      "step_min": 1,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 420027,
+      "min": 0.0,
+      "max": 2.9,
+      "status": "active",
+      "lat": 40.82980556,
+      "lon": 14.13547222,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia 1 min",
+      "raw_max_days": 14,
+      "qc_notes": [
+        "Dati originali al minuto, rete dpcn-campania (Protezione Civile), scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nel minuto che termina a t. Risoluzione tipica 0,2 mm (pochi valori con passo 0,1 mm).",
+        "Totale registrato: 561.2 mm (01/01/2026 – 22/10/2026).",
+        "Dato escluso (flag 2): 23.2 mm in 1 minuto il 08/09/2026 alle 08:54, isolato in assenza di pioggia: non plausibile (valore mantenuto nel CSV ma escluso da grafici, aggregati e cumulate).",
+        "Stessa stazione della serie PZZ_CF_RAIN (10 min): sommando a 10 min i valori coincidono con quelli di PZZ_CF_RAIN; fa eccezione solo il picco anomalo di 23,2 mm, che in PZZ_CF_RAIN compare il 09/09/2026 alle 00:00."
+      ],
+      "sources": [
+        {
+          "file": "data-20261022T063400Z-e80175b7-9a3e-41f9-93b6-c7b6ad88c3a8.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 420027,
+        "n_suspect": 0,
+        "n_bad": 1
+      },
+      "gaps_over_24h": [],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/PZZ_CF_RAIN1MIN/{year}.csv",
+        "agg_1h": "data/agg/PZZ_CF_RAIN1MIN_1h.csv",
+        "agg_1d": "data/agg/PZZ_CF_RAIN1MIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN",
+      "station_id": "NIS_CF",
+      "variable": "rain",
+      "label": "Pioggia – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "sum",
+      "step_min": 1,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 419635,
+      "min": 0.0,
+      "max": 3.0,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia",
+      "raw_max_days": 14,
+      "qc_notes": [
+        "Dati originali al minuto, rete dpcn-campania (Protezione Civile), scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nel minuto che termina a t. Risoluzione tipica 0,2 mm (pochi valori con passo 0,1 mm).",
+        "Totale registrato: 544.8 mm (01/01/2026 – 22/10/2026)."
+      ],
+      "sources": [
+        {
+          "file": "data-20261022T063400Z-e80175b7-9a3e-41f9-93b6-c7b6ad88c3a8.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 419635,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN1H",
+      "station_id": "NIS_CF",
+      "variable": "rain_1h",
+      "label": "Pioggia cumulata 1 h – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41961,
+      "min": 0.0,
+      "max": 23.4,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da NIS_CF_RAIN: pioggia caduta nelle 1 ore che terminano al timestamp (finestra mobile, intervallo (t-1 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 1 h: 23.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 47 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41961,
+        "n_suspect": 47,
+        "n_bad": 0
+      },
+      "derived_from": "NIS_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN1H/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN1H_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN1H_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN3H",
+      "station_id": "NIS_CF",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41961,
+      "min": 0.0,
+      "max": 46.6,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da NIS_CF_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 3 h: 46.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 146 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41961,
+        "n_suspect": 146,
+        "n_bad": 0
+      },
+      "derived_from": "NIS_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN6H",
+      "station_id": "NIS_CF",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41961,
+      "min": 0.0,
+      "max": 61.0,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da NIS_CF_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 6 h: 61.0 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 257 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41961,
+        "n_suspect": 257,
+        "n_bad": 0
+      },
+      "derived_from": "NIS_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN24H",
+      "station_id": "NIS_CF",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41961,
+      "min": 0.0,
+      "max": 80.6,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da NIS_CF_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 24 h: 80.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.033 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41961,
+        "n_suspect": 1033,
+        "n_bad": 0
+      },
+      "derived_from": "NIS_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN48H",
+      "station_id": "NIS_CF",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41961,
+      "min": 0.0,
+      "max": 118.2,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da NIS_CF_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 48 h: 118.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.555 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41961,
+        "n_suspect": 1555,
+        "n_bad": 0
+      },
+      "derived_from": "NIS_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "NIS_CF_RAIN72H",
+      "station_id": "NIS_CF",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Nisida (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41961,
+      "min": 0.0,
+      "max": 132.6,
+      "status": "active",
+      "lat": 40.79361,
+      "lon": 14.16389000000001,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da NIS_CF_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 72 h: 132.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.553 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41961,
+        "n_suspect": 1553,
+        "n_bad": 0
+      },
+      "derived_from": "NIS_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/NIS_CF_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/NIS_CF_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/NIS_CF_RAIN72H_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN",
+      "station_id": "LPA_CF",
+      "variable": "rain",
+      "label": "Pioggia – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "sum",
+      "step_min": 1,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 419647,
+      "min": 0.0,
+      "max": 3.4,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia",
+      "raw_max_days": 14,
+      "qc_notes": [
+        "Dati originali al minuto, rete dpcn-campania (Protezione Civile), scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nel minuto che termina a t. Risoluzione tipica 0,2 mm (pochi valori con passo 0,1 mm).",
+        "Totale registrato: 605.2 mm (01/01/2026 – 22/10/2026)."
+      ],
+      "sources": [
+        {
+          "file": "data-20261022T063400Z-e80175b7-9a3e-41f9-93b6-c7b6ad88c3a8.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 419647,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN1H",
+      "station_id": "LPA_CF",
+      "variable": "rain_1h",
+      "label": "Pioggia cumulata 1 h – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41963,
+      "min": 0.0,
+      "max": 33.0,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da LPA_CF_RAIN: pioggia caduta nelle 1 ore che terminano al timestamp (finestra mobile, intervallo (t-1 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 1 h: 33.0 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 51 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41963,
+        "n_suspect": 51,
+        "n_bad": 0
+      },
+      "derived_from": "LPA_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN1H/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN1H_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN1H_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN3H",
+      "station_id": "LPA_CF",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41963,
+      "min": 0.0,
+      "max": 48.2,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da LPA_CF_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 3 h: 48.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 129 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41963,
+        "n_suspect": 129,
+        "n_bad": 0
+      },
+      "derived_from": "LPA_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN6H",
+      "station_id": "LPA_CF",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41963,
+      "min": 0.0,
+      "max": 62.2,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da LPA_CF_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 6 h: 62.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 257 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41963,
+        "n_suspect": 257,
+        "n_bad": 0
+      },
+      "derived_from": "LPA_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN24H",
+      "station_id": "LPA_CF",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41963,
+      "min": 0.0,
+      "max": 88.6,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da LPA_CF_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 24 h: 88.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.033 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41963,
+        "n_suspect": 1033,
+        "n_bad": 0
+      },
+      "derived_from": "LPA_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN48H",
+      "station_id": "LPA_CF",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41963,
+      "min": 0.0,
+      "max": 135.8,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da LPA_CF_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 48 h: 135.8 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.555 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41963,
+        "n_suspect": 1555,
+        "n_bad": 0
+      },
+      "derived_from": "LPA_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "LPA_CF_RAIN72H",
+      "station_id": "LPA_CF",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Lago Patria (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41963,
+      "min": 0.0,
+      "max": 184.8,
+      "status": "active",
+      "lat": 40.94111000000001,
+      "lon": 14.021389999999997,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da LPA_CF_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 72 h: 184.8 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.553 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41963,
+        "n_suspect": 1553,
+        "n_bad": 0
+      },
+      "derived_from": "LPA_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/LPA_CF_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/LPA_CF_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/LPA_CF_RAIN72H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN",
+      "station_id": "CAM_CF",
+      "variable": "rain",
+      "label": "Pioggia – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "sum",
+      "step_min": 1,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 419979,
+      "min": 0.0,
+      "max": 2.7,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia",
+      "raw_max_days": 14,
+      "qc_notes": [
+        "Dati originali al minuto, rete dpcn-campania (Protezione Civile), scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nel minuto che termina a t. Risoluzione tipica 0,2 mm (pochi valori con passo 0,1 mm).",
+        "Totale registrato: 484.4 mm (01/01/2026 – 22/10/2026)."
+      ],
+      "sources": [
+        {
+          "file": "data-20261022T063400Z-e80175b7-9a3e-41f9-93b6-c7b6ad88c3a8.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 419979,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN1H",
+      "station_id": "CAM_CF",
+      "variable": "rain_1h",
+      "label": "Pioggia cumulata 1 h – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41995,
+      "min": 0.0,
+      "max": 26.3,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAM_CF_RAIN: pioggia caduta nelle 1 ore che terminano al timestamp (finestra mobile, intervallo (t-1 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 1 h: 26.3 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 56 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41995,
+        "n_suspect": 56,
+        "n_bad": 0
+      },
+      "derived_from": "CAM_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN1H/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN1H_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN1H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN3H",
+      "station_id": "CAM_CF",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41995,
+      "min": 0.0,
+      "max": 37.3,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAM_CF_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 3 h: 37.3 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 145 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41995,
+        "n_suspect": 145,
+        "n_bad": 0
+      },
+      "derived_from": "CAM_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN6H",
+      "station_id": "CAM_CF",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41995,
+      "min": 0.0,
+      "max": 60.3,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAM_CF_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 6 h: 60.3 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 257 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41995,
+        "n_suspect": 257,
+        "n_bad": 0
+      },
+      "derived_from": "CAM_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN24H",
+      "station_id": "CAM_CF",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41995,
+      "min": 0.0,
+      "max": 83.1,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAM_CF_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 24 h: 83.1 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 904 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41995,
+        "n_suspect": 904,
+        "n_bad": 0
+      },
+      "derived_from": "CAM_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN48H",
+      "station_id": "CAM_CF",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41995,
+      "min": 0.0,
+      "max": 119.0,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAM_CF_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 48 h: 119.0 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.296 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41995,
+        "n_suspect": 1296,
+        "n_bad": 0
+      },
+      "derived_from": "CAM_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAM_CF_RAIN72H",
+      "station_id": "CAM_CF",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Napoli Camaldoli (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41995,
+      "min": 0.0,
+      "max": 149.7,
+      "status": "active",
+      "lat": 40.85527999999999,
+      "lon": 14.197499999999991,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAM_CF_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 72 h: 149.7 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.553 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41995,
+        "n_suspect": 1553,
+        "n_bad": 0
+      },
+      "derived_from": "CAM_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAM_CF_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/CAM_CF_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/CAM_CF_RAIN72H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN",
+      "station_id": "CAP_CF",
+      "variable": "rain",
+      "label": "Pioggia – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "sum",
+      "step_min": 1,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 419097,
+      "min": 0.0,
+      "max": 2.2,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "short_label": "Pioggia",
+      "raw_max_days": 14,
+      "qc_notes": [
+        "Dati originali al minuto, rete dpcn-campania (Protezione Civile), scaricati da MeteoHub (Agenzia ItaliaMeteo) in formato BUFR.",
+        "Orari convertiti da UTC a UTC+1; il valore al timestamp t è la pioggia caduta nel minuto che termina a t. Risoluzione tipica 0,2 mm (pochi valori con passo 0,1 mm).",
+        "Totale registrato: 698.0 mm (01/01/2026 – 22/10/2026)."
+      ],
+      "sources": [
+        {
+          "file": "data-20261022T063400Z-e80175b7-9a3e-41f9-93b6-c7b6ad88c3a8.bufr",
+          "sheet": "–",
+          "column": "13011 (precipitazione totale)"
+        }
+      ],
+      "qc_summary": {
+        "n_total": 419097,
+        "n_suspect": 0,
+        "n_bad": 0
+      },
+      "gaps_over_24h": [],
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN1H",
+      "station_id": "CAP_CF",
+      "variable": "rain_1h",
+      "label": "Pioggia cumulata 1 h – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41905,
+      "min": 0.0,
+      "max": 27.8,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAP_CF_RAIN: pioggia caduta nelle 1 ore che terminano al timestamp (finestra mobile, intervallo (t-1 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 1 h: 27.8 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 66 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41905,
+        "n_suspect": 66,
+        "n_bad": 0
+      },
+      "derived_from": "CAP_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN1H/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN1H_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN1H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN3H",
+      "station_id": "CAP_CF",
+      "variable": "rain_3h",
+      "label": "Pioggia cumulata 3 h – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41905,
+      "min": 0.0,
+      "max": 49.4,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAP_CF_RAIN: pioggia caduta nelle 3 ore che terminano al timestamp (finestra mobile, intervallo (t-3 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 3 h: 49.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 193 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41905,
+        "n_suspect": 193,
+        "n_bad": 0
+      },
+      "derived_from": "CAP_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN3H/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN3H_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN3H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN6H",
+      "station_id": "CAP_CF",
+      "variable": "rain_6h",
+      "label": "Pioggia cumulata 6 h – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41905,
+      "min": 0.0,
+      "max": 73.2,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAP_CF_RAIN: pioggia caduta nelle 6 ore che terminano al timestamp (finestra mobile, intervallo (t-6 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 6 h: 73.2 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 289 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41905,
+        "n_suspect": 289,
+        "n_bad": 0
+      },
+      "derived_from": "CAP_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN6H/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN6H_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN6H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN24H",
+      "station_id": "CAP_CF",
+      "variable": "rain_24h",
+      "label": "Pioggia cumulata 24 h – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41905,
+      "min": 0.0,
+      "max": 98.7,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAP_CF_RAIN: pioggia caduta nelle 24 ore che terminano al timestamp (finestra mobile, intervallo (t-24 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 24 h: 98.7 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.033 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41905,
+        "n_suspect": 1033,
+        "n_bad": 0
+      },
+      "derived_from": "CAP_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN24H/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN24H_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN24H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN48H",
+      "station_id": "CAP_CF",
+      "variable": "rain_48h",
+      "label": "Pioggia cumulata 48 h – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41905,
+      "min": 0.0,
+      "max": 124.6,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAP_CF_RAIN: pioggia caduta nelle 48 ore che terminano al timestamp (finestra mobile, intervallo (t-48 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 48 h: 124.6 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.555 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41905,
+        "n_suspect": 1555,
+        "n_bad": 0
+      },
+      "derived_from": "CAP_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN48H/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN48H_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN48H_1d.csv"
+      }
+    },
+    {
+      "series_id": "CAP_CF_RAIN72H",
+      "station_id": "CAP_CF",
+      "variable": "rain_72h",
+      "label": "Pioggia cumulata 72 h – Napoli Capodimonte (CF)",
+      "unit": "mm",
+      "aggregation": "last",
+      "step_min": 10,
+      "start": "2026-01-01T01:00+01:00",
+      "end": "2026-10-22T01:00+01:00",
+      "n_values": 41905,
+      "min": 0.0,
+      "max": 158.4,
+      "status": "active",
+      "lat": 40.86555999999999,
+      "lon": 14.234170000000006,
+      "depth_m": null,
+      "sensor_model": null,
+      "logger_port": null,
+      "qc_notes": [
+        "Serie derivata da CAP_CF_RAIN: pioggia caduta nelle 72 ore che terminano al timestamp (finestra mobile, intervallo (t-72 h, t]), calcolata ogni 10 minuti dai dati al minuto.",
+        "Massimo 72 h: 158.4 mm.",
+        "flag 1 = copertura <90% della finestra: valore sottostimato. 1.941 dati segnalati."
+      ],
+      "qc_summary": {
+        "n_total": 41905,
+        "n_suspect": 1941,
+        "n_bad": 0
+      },
+      "derived_from": "CAP_CF_RAIN",
+      "data": {
+        "years": [
+          2026
+        ],
+        "raw": "data/raw/CAP_CF_RAIN72H/{year}.csv",
+        "agg_1h": "data/agg/CAP_CF_RAIN72H_1h.csv",
+        "agg_1d": "data/agg/CAP_CF_RAIN72H_1d.csv"
       }
     }
   ]

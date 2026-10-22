@@ -530,7 +530,7 @@
     list.innerHTML = ordered.map(([stId, arr]) => `
       <div class="st-group"><div class="st-title">${stationById[stId].name}
         <span class="st-elev">${stationById[stId].elevation_m != null ? `${stationById[stId].elevation_m} m` : ""}</span></div>
-      ${arr.sort((a, b) => VAR_ORDER.indexOf(a.variable) - VAR_ORDER.indexOf(b.variable) || (a.depth_m ?? 0) - (b.depth_m ?? 0) || b.step_min - a.step_min)
+      ${arr.sort((a, b) => VAR_ORDER.indexOf(a.variable) - VAR_ORDER.indexOf(b.variable) || (a.depth_m ?? 0) - (b.depth_m ?? 0) || a.step_min - b.step_min)
         .map((s) => {
           const on = state.selected.includes(s.series_id);
           const d = s.depth_m != null ? ` ${Math.round(s.depth_m * 100)} cm` : "";

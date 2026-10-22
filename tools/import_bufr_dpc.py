@@ -36,11 +36,11 @@ LAYOUT = dict(
 
 # stazione nel BUFR -> (station_id, nome, id serie 1 min, etichetta, già presente nel catalogo?)
 STATIONS = {
-    "Pozzuoli":           dict(id="PZZ_CF", rain_id="PZZ_CF_RAIN1MIN", existing=True),
-    "Nisida METEO":       dict(id="NIS_CF", name="Nisida – Centro Funzionale Campania", short="Nisida", code="Nisida METEO"),
-    "Lago Patria METEO":  dict(id="LPA_CF", name="Lago Patria – Centro Funzionale Campania", short="Lago Patria", code="Lago Patria METEO"),
-    "Napoli Camaldoli":   dict(id="CAM_CF", name="Napoli Camaldoli – Centro Funzionale Campania", short="Napoli Camaldoli", code="Napoli Camaldoli"),
-    "Napoli Capodimonte": dict(id="CAP_CF", name="Napoli Capodimonte – Centro Funzionale Campania", short="Napoli Capodimonte", code="Napoli Capodimonte"),
+    "Pozzuoli":           dict(id="PZZ_CF", short="Pozzuoli", existing=True, order=1),
+    "Napoli Camaldoli":   dict(id="CAM_CF", name="Napoli Camaldoli – CF", short="Napoli Camaldoli", code="Napoli Camaldoli", elev=384, order=2),
+    "Napoli Capodimonte": dict(id="CAP_CF", name="Napoli Capodimonte – CF", short="Napoli Capodimonte", code="Napoli Capodimonte", elev=200, order=3),
+    "Nisida METEO":       dict(id="NIS_CF", name="Nisida – CF", short="Nisida", code="Nisida METEO", elev=88, order=4),
+    "Lago Patria METEO":  dict(id="LPA_CF", name="Lago Patria – CF", short="Lago Patria", code="Lago Patria METEO", elev=1, order=5),
 }
 SPIKE_MM_PER_MIN = 10.0   # >600 mm/h in un minuto: fisicamente non plausibile -> flag 2 (escluso)
 RAW_MAX_DAYS_1MIN = 14
@@ -120,7 +120,7 @@ def main():
         flag = bad.astype(int) * 2
         valid = rain.where(~bad)                     # per aggregati e cumulate: i dati errati non contano
         step = 1
-        sid_rain = cfg.get("rain_id", f"{cfg['id']}_RAIN")
+        sid_rain = f"{cfg['id']}_RAIN1MIN"          # serie al minuto
         grid = regular_grid(valid, step)
         gaps = grid.isna()
         # lacune > 24 h
@@ -149,7 +149,7 @@ def main():
                 notes.append(f"Dato escluso (flag 2): {v_:.1f} mm in 1 minuto il {t_:%d/%m/%Y alle %H:%M}, isolato in assenza di pioggia: non plausibile (valore mantenuto nel CSV ma escluso da grafici, aggregati e cumulate).")
         if cfg.get("existing"):
             notes.append("Stessa stazione della serie PZZ_CF_RAIN (10 min): sommando a 10 min i valori coincidono con quelli di PZZ_CF_RAIN; fa eccezione solo il picco anomalo di 23,2 mm, che in PZZ_CF_RAIN compare il 09/09/2026 alle 00:00.")
-        label = f"Pioggia 1 min – Pozzuoli (CF)" if cfg.get("existing") else f"Pioggia – {cfg['short']} (CF)"
+        label = f"Pioggia 1 min – {cfg['short']} (CF)"
         base = dict(
             station_id=cfg["id"], variable="rain", label=label, unit="mm", aggregation="sum", step_min=1,
             start=iso(t0), end=iso(t1), n_values=int(len(rain)), min=vmin, max=vmax, status="active",
@@ -159,7 +159,7 @@ def main():
         )
         s = dict(series_id=sid_rain, **base)
         s.update(
-            short_label="Pioggia 1 min" if cfg.get("existing") else "Pioggia",
+            short_label="Pioggia 1 min",
             raw_max_days=RAW_MAX_DAYS_1MIN,
             qc_notes=notes, sources=[{"file": src_name, "sheet": "–", "column": "13011 (precipitazione totale)"}],
             qc_summary={"n_total": int(len(rain)), "n_suspect": 0, "n_bad": int(bad.sum())},
@@ -169,11 +169,37 @@ def main():
         new_series.append(s)
         n_cum = 0
         if not cfg.get("existing"):
+            # serie a 10 min (stessa convenzione di PZZ_CF_RAIN): somma dei minuti in (T-10, T]
+            sid10 = f"{cfg['id']}_RAIN"
+            lab = (grid.index - pd.Timedelta(seconds=1)).ceil("10min")
+            cnt10 = grid.notna().groupby(lab).sum()
+            r10 = grid.groupby(lab).sum(min_count=1).dropna()
+            d10 = pd.DataFrame({"value": r10.round(1), "flag": (cnt10[r10.index] < 9).astype(int)})
+            y10 = write_raw(d10, sid10, root)
+            write_agg(aggregate(d10[["value"]], "h", 10, "sum"), sid10, "1h", root)
+            write_agg(aggregate(d10[["value"]], "D", 10, "sum"), sid10, "1d", root)
+            n10 = int(d10.flag.sum())
+            t10 = dict(base)
+            t10.update(
+                series_id=sid10, label=f"Pioggia 10 min – {cfg['short']} (CF)", step_min=10,
+                start=iso(d10.index[0]), end=iso(d10.index[-1]), n_values=int(len(d10)),
+                min=round(float(d10.value.min()), 1), max=round(float(d10.value.max()), 1),
+                short_label="Pioggia 10 min",
+                qc_notes=[
+                    f"Serie derivata da {sid_rain}: somma dei minuti validi nell'intervallo (t-10 min, t], stessa convenzione di PZZ_CF_RAIN.",
+                    f"Totale registrato: {d10.value.sum():.1f} mm. Massimo {d10.value.max():.1f} mm/10 min.",
+                    f"flag 1 = meno di 9 minuti validi su 10: valore sottostimato. {n10:,} dati segnalati.".replace(",", "."),
+                ],
+                qc_summary={"n_total": int(len(d10)), "n_suspect": n10, "n_bad": 0},
+                gaps_over_24h=gl, derived_from=sid_rain,
+                data={"years": y10, "raw": f"data/raw/{sid10}/{{year}}.csv", "agg_1h": f"data/agg/{sid10}_1h.csv", "agg_1d": f"data/agg/{sid10}_1d.csv"},
+            )
+            new_series.append(t10)
             new_stations.append(dict(
-                station_id=cfg["id"], name=cfg["name"], lat=round(lat, 8), lon=round(lon, 8), elevation_m=round(float(h)),
+                station_id=cfg["id"], name=cfg["name"], lat=round(lat, 8), lon=round(lon, 8), elevation_m=cfg["elev"],
                 owner="Centro Funzionale Multirischi della Protezione Civile, Regione Campania (rete dpcn-campania, via MeteoHub)",
                 external_code=cfg["code"],
-                notes="Stazione pluviometrica della rete dpcn-campania. Dati al minuto (2026). Quota dai metadati BUFR, da verificare.",
+                notes="Stazione pluviometrica della rete dpcn-campania. Dati al minuto e a 10 minuti (2026).",
             ))
             for hrs in CUM_HOURS:
                 cid = f"{cfg['id']}_RAIN{hrs}H"
@@ -202,6 +228,14 @@ def main():
 
     cat["stations"] += new_stations
     cat["series"] += new_series
+    for st in cat["stations"]:
+        cfg = next(c for c in STATIONS.values() if c["id"] == st["station_id"])
+        st["order"] = cfg["order"]              # ordine nell'elenco del portale
+        if cfg.get("existing"):
+            st["name"] = f"{cfg['short']} – CF"
+    for se in cat["series"]:
+        if se["series_id"] == "PZZ_CF_RAIN":
+            se["short_label"] = "Pioggia 10 min"
     cat["catalog_version"] = "0.6"
     cat["generated"] = (pd.Timestamp.now(tz="UTC") + pd.Timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S+01:00")
     cat_path.write_text(json.dumps(cat, indent=2, ensure_ascii=False), encoding="utf-8")

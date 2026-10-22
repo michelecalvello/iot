@@ -25,7 +25,7 @@
   const UNIT = (u) => u.replace("m3/m3", "m³/m³");
   const DEFAULT = {
     selected: ["PZZ_CF_RAIN"],
-    from: "2024-01-01 00:00", to: "2025-01-01 00:00",
+    from: "2026-01-01 00:00", to: "2027-01-01 00:00",
   };
 
   // ---------------------------------------------------------------- stato
@@ -514,8 +514,8 @@
   // ---------------------------------------------------------------- stazioni
   const isCF = (st) => /^CF_/.test(st.station_id);
   const elevLabel = (st) => st.elevation_m != null ? `${st.elevation_m} m s.l.m.` : "quota n.d.";
-  // ordine: stazioni UNISA, poi rete CF per quota crescente
-  const stationOrder = (a, b) => (isCF(a) - isCF(b)) || ((a.elevation_m ?? 0) - (b.elevation_m ?? 0));
+  // ordine: campo "order" del catalogo (se presente), poi stazioni UNISA, poi rete CF per quota crescente
+  const stationOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99) || (isCF(a) - isCF(b)) || ((a.elevation_m ?? 0) - (b.elevation_m ?? 0));
 
   // ---------------------------------------------------------------- elenco serie
   function renderSeriesList() {
@@ -530,7 +530,7 @@
     list.innerHTML = ordered.map(([stId, arr]) => `
       <div class="st-group"><div class="st-title">${stationById[stId].name}
         <span class="st-elev">${stationById[stId].elevation_m != null ? `${stationById[stId].elevation_m} m` : ""}</span></div>
-      ${arr.sort((a, b) => VAR_ORDER.indexOf(a.variable) - VAR_ORDER.indexOf(b.variable) || (a.depth_m ?? 0) - (b.depth_m ?? 0))
+      ${arr.sort((a, b) => VAR_ORDER.indexOf(a.variable) - VAR_ORDER.indexOf(b.variable) || (a.depth_m ?? 0) - (b.depth_m ?? 0) || b.step_min - a.step_min)
         .map((s) => {
           const on = state.selected.includes(s.series_id);
           const d = s.depth_m != null ? ` ${Math.round(s.depth_m * 100)} cm` : "";
